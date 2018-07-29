@@ -1,6 +1,6 @@
 config:
   EMR_CLUSTER_NAME: "my-hail-02-cluster"
-  KEY_NAME: "my-key.pem"
+  KEY_NAME: "my-key"
   PATH_TO_KEY: "/full-path/to-key/"
   INSTANCE_TYPE: "c4.8xlarge"
   CORE_COUNT: "3"
