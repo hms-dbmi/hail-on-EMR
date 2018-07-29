@@ -15,6 +15,8 @@ do
    scp /home/hadoop/hail-* $SLAVEIP:/home/hadoop/
 done
 
+echo 'Keys successfully copied to NODES'
+
 # Add hail to the master node
 sudo mkdir -p /opt
 sudo chmod 777 /opt/
@@ -26,7 +28,7 @@ export HAIL_HOME=/opt/hail02-on-EMR
 
 # Update Python 3.6 in all the nodes in the cluster
 # First for the master node
-cd $HAIL_HOME/src/cluster/v2/
+cd $HAIL_HOME/src
 chmod +x hail_install_python3.sh
 sudo ./hail_install_python3.sh
 # Then for the slaves\core nodes
@@ -39,10 +41,11 @@ do
    ssh hadoop@${SLAVEIP} "python3 --version"
 done
 
-
-
-./jupyter_build.sh
-./jupyter_run.sh
-
-
-
+sudo chmod +x jupyter_build.sh
+sudo chmod +x hail_build.sh
+sudo chmod +x jupyter_run.sh
+sudo chmod +x jupyter_installer.sh
+sudo chmod +x jupyter_extraRlibraries_install.sh
+sudo ./hail_build.sh
+sudo ./jupyter_build.sh
+sudo ./jupyter_run.sh
