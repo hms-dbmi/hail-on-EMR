@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Dependencies: hail_install_python3.sh, setup.sh, jupyter_build.sh, jupyter_run.sh
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/cloudcreation_log.out 2>&1
@@ -37,14 +37,6 @@ do
    ssh hadoop@${SLAVEIP} "sudo chmod +x /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "sudo /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "python3 --version"
-done
-
-# Install data dog 
-DD_API_KEY=e5c74a4d3c394e204f9256402ae42880 bash -c "$(curl -L https://raw.githubusercontent.com/DataDog/datadog-agent/master/cmd/agent/install_script.sh)"
-
-for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
-do
-   ssh hadoop@${SLAVEIP} "DD_API_KEY=e5c74a4d3c394e204f9256402ae42880 bash -c \"\$(curl -L https://raw.githubusercontent.com/DataDog/datadog-agent/master/cmd/agent/install_script.sh)\""
 done
 
 
