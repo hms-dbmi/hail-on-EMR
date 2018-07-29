@@ -23,3 +23,4 @@ cd $HAIL_HOME/notebook/
 nohup jupyter notebook >/tmp/jupyter_notebook.log 2>&1 &
 echo $! > /tmp/jupyter_notebook.pid
 echo "Started JupyterNotebook in the background."
+
