@@ -15,8 +15,8 @@ The configuration file is in `.yaml` format. Edit the variables accordingly:
 ```yaml
 config:
   EMR_CLUSTER_NAME: "my-hail-02-cluster" # Give a name to the EMR cluster
-  KEY_NAME: "my-key.pem" # Input your key name
-  PATH_TO_KEY: "/full-path/to-key/"
+  KEY_NAME: "my-key" # Input your key name DO NOT include the .pem extension
+  PATH_TO_KEY: "/full-path/to-key/" # Full path to .pem file
   INSTANCE_TYPE: "c4.8xlarge" # Select the instance type
   CORE_COUNT: "3" # Number of cores. Additional reference in the EC2 FAQs website 
   SUBNET_ID: "subnet-12345" # Select you private subnet. See the EC2 FAQs website
