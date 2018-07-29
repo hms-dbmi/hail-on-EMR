@@ -20,7 +20,7 @@ print(command)
 
 cluster_id_json=os.popen(command).read()
 cluster_id=cluster_id_json.split(": \"",1)[1].split("\"\n")[0]
-print('\nClusterId: '+cluster_id)
+print('\nClusterId: '+cluster_id+'\n')
 
 
 # Gives EMR cluster information
@@ -47,22 +47,23 @@ while (status_EMR!='EMPTY'):
 master_dns=details_EMR.get('Cluster').get('MasterPublicDnsName')
 master_IP=re.sub("-",".",master_dns.split(".compute")[0].split("ec2-")[1])
 
+print('\nMaster DNS: '+ master_dns)
+print('Master IP: '+ master_IP)
+
 # Copy the key into the master
-command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+' '+c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+' hadoop@'+master_dns+':/home/hadoop/.ssh/id_rsa'
+command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+'.pem '+c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+'.pem hadoop@'+master_dns+':/home/hadoop/.ssh/id_rsa'
 os.system(command)
 # Copy the installation script into the master
-command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+' '+PATH+'install_hail_python36.sh hadoop@'+master_dns+':/home/hadoop'
+command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+'.pem '+PATH+'install_hail_python36.sh hadoop@'+master_dns+':/home/hadoop'
 os.system(command)
 
-key = paramiko.RSAKey.from_private_key_file(c['config']['PATH_TO_KEY']+c['config']['KEY_NAME'])
+key = paramiko.RSAKey.from_private_key_file(c['config']['PATH_TO_KEY']+c['config']['KEY_NAME']+'.pem')
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
 client.connect(hostname=master_IP, username="hadoop", pkey=key)
 # Execute a command(cmd) after connecting/ssh to an instance
+stdin, stdout, stderr = client.exec_command('cd /home/hadoop/')
+stdin, stdout, stderr = client.exec_command('chmod +x install_hail_python36.sh')
 stdin, stdout, stderr = client.exec_command('./install_hail_python36.sh')
-# close the client connection once the job is done
+# close the client connection 
 client.close()
-
-# ==================================================================================== # 
-##### Testing area from this point down: Pending !!!!!! PATH_TO_KEY
