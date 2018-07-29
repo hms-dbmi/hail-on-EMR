@@ -29,4 +29,4 @@ sudo rm -fR /etc/sbt/conf
 	--s3fs \
 	--spark-opts "--jars ${JAR_PATH} --py-files /home/hadoop/hail-python.zip"
 	
-./jupyter_extraRlibraries_install.sh
+# ./jupyter_extraRlibraries_install.sh # Not necessary as they are defined in the jupyter_installer.sh
