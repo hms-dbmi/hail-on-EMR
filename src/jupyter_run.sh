@@ -15,11 +15,12 @@ export PYSPARK_SUBMIT_ARGS="--conf spark.driver.extraClassPath='$JAR_PATH' --con
 echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 
 sudo mkdir -p $HOME/.jupyter
-cp /opt/hail02-on-EMR/scr/jupyter_notebook_config.py $HOME/.jupyter/
+cp /opt/hail02-on-EMR/src/jupyter_notebook_config.py $HOME/.jupyter/
 
 sudo mkdir -p $HAIL_HOME/notebook/
+sudo chmod -R 777 $HAIL_HOME/notebook
 cd $HAIL_HOME/notebook/
-sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
+
 
 nohup jupyter notebook >/tmp/jupyter_notebook.log 2>&1 &
 echo $! > /tmp/jupyter_notebook.pid
