@@ -899,7 +899,7 @@ R_SCRIPT
     echo "Starting Jupyter notebook via pyspark"
     cd ~
     #PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser" pyspark > /var/log/jupyter/jupyter.log &
-    if [ "$BIGDL" = false ]; then
+#     if [ "$BIGDL" = false ]; then
 #       sudo puppet apply << PUPPET_SCRIPT
 #       include 'upstart'
 #       upstart::job { 'jupyter':
@@ -921,8 +921,8 @@ R_SCRIPT
 #         ',
 #       }
 # PUPPET_SCRIPT
-    else
-      setup_jupyter_process_with_bigdl
+#     else
+#       setup_jupyter_process_with_bigdl
     fi
   fi
 }
