@@ -30,7 +30,9 @@ config:
 ```
 ## Launching the `JupyterNotebook` with `Hail 0.2`
 
-To launch the  `JupyterNotebook` go to the AWS Management Console website and under `EC2 > Instances` select the corresponding `master` node. Under the `description tab > Security Groups > view inbound rules`  and copy the public IP address (IPv4) from the master, in a browser paste the address followed by a `:` and specify port 8192: `PUBLIC_IP_ADDRESS:8192`; use password: `avillach` to login. And you are all set! 
+To launch the  `JupyterNotebook` you need the IP address (IPv4) of the master node that can be obtained either from 1) the `/tmp/cloudcreation_log.out` or by 2) going to the AWS Management Console website and under `EC2 > Instances` selecting the corresponding `master` node then select the `description tab > Security Groups > view inbound rules`.
+
+Paste the IP in a browser followed by a `:` and port 8192: `PUBLIC_IP_ADDRESS:8192`; use password: `avillach` to login. And you are all set! 
 
 ### FAQs and troubleshooting 
 
