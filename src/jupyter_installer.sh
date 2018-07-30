@@ -759,11 +759,11 @@ wait_for_spark() {
   done
 }
 
-# setup_jupyter_process_with_bigdl() {
-#   wait_for_spark
-#   export PYTHON_API_PATH=${BIGDL_HOME}/dist/lib/bigdl-$BIGDL_VER-python-api.zip
-#   export BIGDL_JAR_PATH=${BIGDL_HOME}/dist/lib/bigdl-$BIGDL_VER-jar-with-dependencies.jar
-#   cat ${BIGDL_HOME}/dist/conf/spark-bigdl.conf | sudo tee -a /etc/spark/conf/spark-defaults.conf
+setup_jupyter_process_with_bigdl() {
+  wait_for_spark
+  export PYTHON_API_PATH=${BIGDL_HOME}/dist/lib/bigdl-$BIGDL_VER-python-api.zip
+  export BIGDL_JAR_PATH=${BIGDL_HOME}/dist/lib/bigdl-$BIGDL_VER-jar-with-dependencies.jar
+  cat ${BIGDL_HOME}/dist/conf/spark-bigdl.conf | sudo tee -a /etc/spark/conf/spark-defaults.conf
 #   sudo puppet apply << PUPPET_SCRIPT
 #   include 'upstart'
 #   upstart::job { 'jupyter':
@@ -792,7 +792,7 @@ wait_for_spark() {
 #     ',
 #   }
 # PUPPET_SCRIPT
-# }
+}
 
 background_install_proc() {
   wait_for_spark
@@ -892,14 +892,14 @@ R_SCRIPT
   fi
   
   # the following dirs could cause conflict, so remove them
-#   rm -rf ~/.m2/
-#   rm -rf ~/.ivy2/
+  rm -rf ~/.m2/
+  rm -rf ~/.ivy2/
   
-#   if [ "$NO_JUPYTER" = false ]; then
-#     echo "Starting Jupyter notebook via pyspark"
-#     cd ~
-#     #PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser" pyspark > /var/log/jupyter/jupyter.log &
-#     if [ "$BIGDL" = false ]; then
+  if [ "$NO_JUPYTER" = false ]; then
+    echo "Starting Jupyter notebook via pyspark"
+    cd ~
+    #PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser" pyspark > /var/log/jupyter/jupyter.log &
+    if [ "$BIGDL" = false ]; then
 #       sudo puppet apply << PUPPET_SCRIPT
 #       include 'upstart'
 #       upstart::job { 'jupyter':
@@ -921,11 +921,11 @@ R_SCRIPT
 #         ',
 #       }
 # PUPPET_SCRIPT
-#     else
-#       setup_jupyter_process_with_bigdl
-#     fi
-#   fi
-# }
+    else
+      setup_jupyter_process_with_bigdl
+    fi
+  fi
+}
 
 create_hdfs_user() {
   wait_for_spark
@@ -972,7 +972,7 @@ if [ "$TOREE_KERNEL" = true ]; then
 else
   if [ "$NO_JUPYTER" = false ]; then
     echo "Starting Jupyter notebook"
-#     if [ "$BIGDL" = false ]; then
+    if [ "$BIGDL" = false ]; then
 #       sudo puppet apply << PUPPET_SCRIPT
 #       include 'upstart'
 #       upstart::job { 'jupyter':
@@ -987,30 +987,30 @@ else
 #           exec           => 'sudo su - hadoop -c "jupyter notebook --no-browser $SSL_OPTS_JUPYTER" > /var/log/jupyter/jupyter.log 2>&1',
 #       }
 # PUPPET_SCRIPT
-#     else
-#       setup_jupyter_process_with_bigdl &
+    else
+      setup_jupyter_process_with_bigdl &
     fi
   fi
 fi
 
-# if [ "$JUPYTER_HUB" = true ]; then
-#   sudo npm install -g --unsafe-perm configurable-http-proxy
-#   sudo python3 -m pip install $UPDATE_FLAG jupyterhub #notebook ipykernel
-#   #sudo python3 -m ipykernel install
+if [ "$JUPYTER_HUB" = true ]; then
+  sudo npm install -g --unsafe-perm configurable-http-proxy
+  sudo python3 -m pip install $UPDATE_FLAG jupyterhub #notebook ipykernel
+  #sudo python3 -m ipykernel install
   
-#   if [ ! "$JUPYTER_HUB_DEFAULT_USER" = "" ]; then
-#     create_hdfs_user &
-#   fi
-#   # change the password of the hadoop user to JUPYTER_PASSWORD
-#   if [ ! "$JUPYTER_PASSWORD" = "" ]; then
-#     sudo sh -c "echo '$JUPYTER_PASSWORD' | passwd --stdin $JUPYTER_HUB_DEFAULT_USER"
-#   fi
+  if [ ! "$JUPYTER_HUB_DEFAULT_USER" = "" ]; then
+    create_hdfs_user &
+  fi
+  # change the password of the hadoop user to JUPYTER_PASSWORD
+  if [ ! "$JUPYTER_PASSWORD" = "" ]; then
+    sudo sh -c "echo '$JUPYTER_PASSWORD' | passwd --stdin $JUPYTER_HUB_DEFAULT_USER"
+  fi
   
-#   sudo ln -sf /usr/local/bin/jupyterhub /usr/bin/
-#   sudo ln -sf /usr/local/bin/jupyterhub-singleuser /usr/bin/
-#   mkdir -p /mnt/jupyterhub
-#   cd /mnt/jupyterhub
-#   echo "Starting Jupyterhub"
+  sudo ln -sf /usr/local/bin/jupyterhub /usr/bin/
+  sudo ln -sf /usr/local/bin/jupyterhub-singleuser /usr/bin/
+  mkdir -p /mnt/jupyterhub
+  cd /mnt/jupyterhub
+  echo "Starting Jupyterhub"
   #sudo jupyterhub $SSL_OPTS_JUPYTERHUB --port=$JUPYTER_HUB_PORT --ip=$JUPYTER_HUB_IP --log-file=/var/log/jupyter/jupyterhub.log --config ~/.jupyter/jupyter_notebook_config.py &
 #   sudo puppet apply << PUPPET_SCRIPT
 #   include 'upstart'
@@ -1027,7 +1027,7 @@ fi
 #   }
 # PUPPET_SCRIPT
 
-# fi
+fi
 
 # cat << 'EOF' > /tmp/jupyter_logpusher.config
 # {
