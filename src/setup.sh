@@ -24,5 +24,5 @@ python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements.txt
 logger_debug "Status and Context check of hail environment"
 
-export HAILPROXY_HOME=`pwd`
+export HAIL_HOME=`pwd`
 ./hail_submit.sh src/scripts/context.py
