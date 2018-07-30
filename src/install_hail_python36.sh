@@ -45,7 +45,7 @@ sudo chmod +x jupyter_build.sh
 sudo chmod +x hail_build.sh
 sudo chmod +x jupyter_run.sh
 sudo chmod +x jupyter_installer.sh
-sudo chmod +x jupyter_extraRlibraries_install.sh
+# sudo chmod +x jupyter_extraRlibraries_install.sh. 
 ./hail_build.sh
 ./jupyter_build.sh
-./jupyter_run.sh
+# ./jupyter_run.sh
