@@ -19,6 +19,7 @@ cp /opt/hail/HailProxy/src/cluster/v2/jupyter_notebook_config.py $HOME/.jupyter/
 
 sudo mkdir -p $HAILPROXY_HOME/notebook/
 cd $HAILPROXY_HOME/notebook/
+sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
 nohup jupyter notebook >/tmp/jupyter_notebook.log 2>&1 &
 echo $! > /tmp/jupyter_notebook.pid
