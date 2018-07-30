@@ -17,8 +17,8 @@ echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 sudo mkdir -p $HOME/.jupyter
 cp /opt/hail/HailProxy/src/cluster/v2/jupyter_notebook_config.py $HOME/.jupyter/
 
-sudo mkdir -p $HAILPROXY_HOME/notebook/
-cd $HAILPROXY_HOME/notebook/
+sudo mkdir -p $HAIL_HOME/notebook/
+cd $HAIL_HOME/notebook/
 sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
 nohup jupyter notebook >/tmp/jupyter_notebook.log 2>&1 &
