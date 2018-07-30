@@ -15,7 +15,7 @@ export PYSPARK_SUBMIT_ARGS="--conf spark.driver.extraClassPath='$JAR_PATH' --con
 echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 
 sudo mkdir -p $HOME/.jupyter
-cp /opt/hail/HailProxy/src/cluster/v2/jupyter_notebook_config.py $HOME/.jupyter/
+cp /opt/hail02-on-EMR/scr/jupyter_notebook_config.py $HOME/.jupyter/
 
 sudo mkdir -p $HAIL_HOME/notebook/
 cd $HAIL_HOME/notebook/
