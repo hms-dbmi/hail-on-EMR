@@ -923,7 +923,7 @@ R_SCRIPT
 # PUPPET_SCRIPT
 #     else
 #       setup_jupyter_process_with_bigdl
-    fi
+#     fi
   fi
 }
 
