@@ -899,7 +899,7 @@ R_SCRIPT
     echo "Starting Jupyter notebook via pyspark"
     cd ~
     #PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser" pyspark > /var/log/jupyter/jupyter.log &
-    if [ "$BIGDL" = false ]; then
+#    if [ "$BIGDL" = false ]; then
 #       sudo puppet apply << PUPPET_SCRIPT
 #       include 'upstart'
 #       upstart::job { 'jupyter':
@@ -921,9 +921,9 @@ R_SCRIPT
 #         ',
 #       }
 # PUPPET_SCRIPT
-    else
-      setup_jupyter_process_with_bigdl
-    fi
+    # else
+    #   setup_jupyter_process_with_bigdl
+    # fi
   fi
 }
 
@@ -972,7 +972,7 @@ if [ "$TOREE_KERNEL" = true ]; then
 else
   if [ "$NO_JUPYTER" = false ]; then
     echo "Starting Jupyter notebook"
-    if [ "$BIGDL" = false ]; then
+    # if [ "$BIGDL" = false ]; then
 #       sudo puppet apply << PUPPET_SCRIPT
 #       include 'upstart'
 #       upstart::job { 'jupyter':
@@ -987,9 +987,9 @@ else
 #           exec           => 'sudo su - hadoop -c "jupyter notebook --no-browser $SSL_OPTS_JUPYTER" > /var/log/jupyter/jupyter.log 2>&1',
 #       }
 # PUPPET_SCRIPT
-    else
-      setup_jupyter_process_with_bigdl &
-    fi
+    # else
+    #   setup_jupyter_process_with_bigdl &
+    # fi
   fi
 fi
 
