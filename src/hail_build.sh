@@ -51,10 +51,5 @@ if [ "$IS_MASTER" = true ]; then
 
   cp $PWD/build/distributions/hail-python.zip $HOME
   cp $PWD/build/libs/hail-all-spark.jar $HOME
-  
-  echo "" >> $HOME/.bashrc
-  echo "export PYTHONPATH=\${PYTHONPATH}:$HOME/hail-python.zip" >> $HOME/.bashrc
-  
-  #aws s3 cp $PWD/build/distributions/hail-python.zip $OUTPUT_PATH
-  #aws s3 cp $PWD/build/libs/hail-all-spark.jar $OUTPUT_PATH
+
 fi
