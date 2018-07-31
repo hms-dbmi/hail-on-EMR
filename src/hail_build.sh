@@ -43,6 +43,7 @@ if [ "$IS_MASTER" = true ]; then
   cd hail/
   git checkout $HAIL_VERSION
 	
+	sudo rm /etc/alternatives/jre/include
 	# src/scripts/context.py
 	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-7.b10.37.amzn1.x86_64/include /etc/alternatives/jre/include
 	
