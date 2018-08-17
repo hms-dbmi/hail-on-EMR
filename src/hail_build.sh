@@ -43,7 +43,6 @@ if [ "$IS_MASTER" = true ]; then
   cd hail/
   git checkout $HAIL_VERSION
 	
-	sudo rm /etc/alternatives/jre/include
 	# src/scripts/context.py
 	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-7.b10.37.amzn1.x86_64/include /etc/alternatives/jre/include
 	
@@ -51,5 +50,10 @@ if [ "$IS_MASTER" = true ]; then
 
   cp $PWD/build/distributions/hail-python.zip $HOME
   cp $PWD/build/libs/hail-all-spark.jar $HOME
-
+  
+  echo "" >> $HOME/.bashrc
+  echo "export PYTHONPATH=\${PYTHONPATH}:$HOME/hail-python.zip" >> $HOME/.bashrc
+  
+  #aws s3 cp $PWD/build/distributions/hail-python.zip $OUTPUT_PATH
+  #aws s3 cp $PWD/build/libs/hail-all-spark.jar $OUTPUT_PATH
 fi
