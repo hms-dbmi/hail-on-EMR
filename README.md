@@ -4,7 +4,7 @@ This `cloudformation` tool creates an EMR cluster under an **emr-5.13.0** releas
 
 ## How to use this tool
 
- First clone this repository (`git clone https://github.com/hms-dbmi/hail02-on-EMR`) and **first** edit the configuration file `hail02_EMR.yaml` as necessary, see configuration details below; `cd` into the `hail02-on-EMR/src` folder. Grant executable permits to `chmod +x hail_cloudformation_emr.sh` and execute `nohup ./hail_cloudformation_emr.sh &` script. Allow 25 minutes for the overall installation. See the installation log file at `/tmp/cloudcreation_log.out` both at the local installation computer and at the master node. 
+ First clone this repository (`git clone https://github.com/hms-dbmi/hail02-on-EMR`) and **first** edit the configuration file `hail02_EMR.yaml` as necessary, see configuration details below; `cd` into the `hail02-on-EMR/src` folder. Grant executable permits to `chmod +x hail_cloudformation_emr.sh` and execute `nohup ./hail_cloudformation_emr.sh &` script. Allow 25 minutes for the overall installation. See the installation log file at `tail -f /tmp/cloudcreation_log.out` both at the local installation computer and at the master node. 
 
  This script is defaulted to region `us-east-1`, instances `c4.8xlarge` : 3 `cores` and 1 `master`. For additional configuration details regarding the **emr-5.13.0** release, visit: <https://console.aws.amazon.com/elasticmapreduce/home?region=us-east-1#quick-create\:>.
 
