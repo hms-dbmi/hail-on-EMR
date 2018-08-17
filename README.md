@@ -1,6 +1,6 @@
 # Hail 0.2 on Amazon EMR: `cloudformation` tool 
 
-This `cloudformation` tool creates an EMR cluster under an **emr-5.10.0** release using `Spark 2.2.0` and `Hadoop 2.73`. In addition, it installs `Hail 0.2` and `JupyterNotebook` in all the instances of the cluster. 
+This `cloudformation` tool creates an EMR cluster under an **emr-5.13.0** release using `Spark 2.3.0` and `Hadoop 2.8.3`. In addition, it installs `Hail 0.2` and `JupyterNotebook` in all the instances of the cluster. 
 
 ## How to use this tool
 
