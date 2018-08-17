@@ -3,7 +3,7 @@ set -x -e
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
-SPARK_VERSION="2.2.0"
+SPARK_VERSION="2.3.0"
 IS_MASTER=false
 
 if grep isMaster /mnt/var/lib/info/instance.json | grep true;
