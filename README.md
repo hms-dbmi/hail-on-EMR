@@ -46,7 +46,7 @@ This script is defaulted to region `us-east-1`, instances `c4.8xlarge` : 3 `core
 See additional instance details at: https://aws.amazon.com/ec2/instance-types/
 
 2. Grant executable permits to the `cloudformation` script by executing the following: `chmod +x hail_cloudformation_emr.sh`
-3. Execute the command: `nohup ./hail_cloudformation_emr.sh &`. The EMR creation takes between 5-7 minutes. See the installation log file at `tail -f /tmp/cloudcreation_log.out`; the logs are available, under the same path, at both the local installation computer and at the master node of your EMR. 
+3. Execute the command: `nohup ./hail_cloudformation_emr.sh &`. The EMR creation takes between 5-7 minutes. See the installation log file at `tail -f /tmp/cloudcreation_log.out`, exit by pressing &#8984;`+C` or `Ctrl+C`; the logs are available, under the same path, at both the local installation computer and at the master node of your EMR. 
 4. You can check the status of the EMR creation at: https://console.aws.amazon.com/elasticmapreduce/home?region=us-east-1. The EMR is successfully created once it gets the status `Waiting`. After created, allow ~20 minutes for all the programs to install. All the programs are installed automatically. 
 5. To obtain the **DNS** (to `ssh` in to the master node) and the **public IP** of the Master node (required to connect to the `JupyterNotebook`), from the terminal execute: 
 ```bash
