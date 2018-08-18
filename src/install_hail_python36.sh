@@ -12,7 +12,6 @@ do
    scp -o "StrictHostKeyChecking no" ~/.ssh/id_rsa ${SLAVEIP}:/home/hadoop/.ssh/id_rsa
    scp ~/.ssh/authorized_keys ${SLAVEIP}:/home/hadoop/.ssh/authorized_keys
    # Distribute the freshly built Hail files
-   scp /home/hadoop/hail-* $SLAVEIP:/home/hadoop/
 done
 
 echo 'Keys successfully copied to NODES'
@@ -30,10 +29,18 @@ export HAIL_HOME=/opt/hail02-on-EMR
 # First for the master node
 cd $HAIL_HOME/src
 chmod +x hail_install_python3.sh
-sudo ./hail_install_python3.sh
+sudo ./hail_install_python3.sh 
+sudo chmod +x hail_build.sh
+sudo ./hail_build.sh
+
+cd $HOME
+wget -O hail-all-spark.jar https://storage.googleapis.com/hail-common/builds/devel/jars/hail-devel-ae9e34fb3cbf-Spark-2.2.0.jar
+wget -O hail-python.zip https://storage.googleapis.com/hail-common/builds/devel/python/hail-devel-ae9e34fb3cbf.zip
+
 # Then for the slaves\core nodes
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
 do
+   scp /home/hadoop/hail-* $SLAVEIP:/home/hadoop/
    scp hail_install_python3.sh hadoop@${SLAVEIP}:/tmp/hail_install_python3.sh
    ssh hadoop@${SLAVEIP} "sudo ls -al /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "sudo chmod +x /tmp/hail_install_python3.sh"
@@ -41,11 +48,15 @@ do
    ssh hadoop@${SLAVEIP} "python3 --version"
 done
 
+sudo stop hadoop-yarn-resourcemanager; sleep 3; sudo start hadoop-yarn-resourcemanager 
 sudo chmod +x jupyter_build.sh
-sudo chmod +x hail_build.sh
 sudo chmod +x jupyter_run.sh
 sudo chmod +x jupyter_installer.sh
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
-./hail_build.sh
+
+sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
+sudo chown hadoop:hadoop /opt
+
 ./jupyter_build.sh
 ./jupyter_run.sh
+
