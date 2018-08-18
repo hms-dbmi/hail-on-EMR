@@ -27,21 +27,16 @@ This script is defaulted to region `us-east-1`, instances `c4.8xlarge` : 3 `core
 
 |Suggested **`INSTANCE_TYPE`s** |
 |:-------------------------:| 
-| m4.large | 
-| m4.xlarge | 
 | m4.2xlarge | 
 | m4.4xlarge | 
 | m4.10xlarge | 
 | m4.16xlarge | 
-| c4.large | 
-| c4.xlarge | 
 | c4.2xlarge | 
 | c4.4xlarge | 
 | c4.8xlarge | 
-| r3.xlarge | 
-| r3.2xlarge | 
-| r3.4xlarge | 
-| r3.8xlarge | 
+| r4.2xlarge | 
+| r4.4xlarge | 
+| r4.8xlarge | 
 
 See additional instance details at: https://aws.amazon.com/ec2/instance-types/
 
