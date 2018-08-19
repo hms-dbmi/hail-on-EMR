@@ -4,7 +4,14 @@ This `cloudformation` tool creates an EMR cluster under an **emr-5.13.0** releas
 
 ## How to use this tool
 
- Open your terminal in MAC or Linux and clone this repository: `git clone https://github.com/hms-dbmi/hail02-on-EMR`. 
+This tool is executed from the terminal using Amazon's `Command Line Interface (CLI)` utility. Before getting started, make sure you have: 
+1) **A valid EC2 key pair**. For additional details on how to create and use your key, visit: https://docs.aws.amazon.com/AWSEC2/late st/UserGuide/ec2-key-pairs.html
+
+2) A configured `CLI`. If your `CLI` has been previously configured, the tool will use this account.   : https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+
+
+
+Open your terminal in MAC or Linux and clone this repository: `git clone https://github.com/hms-dbmi/hail02-on-EMR`. 
  
 1. `cd` into the `hail02-on-EMR/src` folder and with the text editor of your preference open the configuration file: `hail02_EMR.yaml`. This file will be used to provide information necessary to create the cluster. Fill in the fields as necessary using your personal key information and save your changes. See configuration details below:
 
@@ -16,8 +23,8 @@ config:
   INSTANCE_TYPE: "c4.8xlarge" # Select the instance type, see table below
   CORE_COUNT: "3" # Number of cores. Additional reference in the EC2 FAQs website 
   SUBNET_ID: "subnet-12345" # Select you private subnet. See the EC2 FAQs website
-  SLAVE_SECURITY_GROUP: "sg-fromYourPemKey" # PEM key specific. See the EC2 key pairs website
-  MASTER_SECURITY_GROUP: "sg-fromYourPemKey" # PEM key specific. See the EC2 key pairs website
+  SLAVE_SECURITY_GROUP: "sg-fromYourPemKey" # See the EC2 key pairs website listed in the FAQs section
+  MASTER_SECURITY_GROUP: "sg-fromYourPemKey" # See the EC2 key pairs website listed in the FAQs section
   EC2_NAME_TAG: "my-hail-EMR" # Tags for the individual EC2 instances
   OWNER_TAG: "emr-owner" # EC2 owner tag
   PROJECT_TAG: "my-project" # Project tag
@@ -60,5 +67,7 @@ Paste the IP in a browser followed by a `:` and port 8192: `PUBLIC_IP_ADDRESS_MA
 
 * EC2 key pairs website: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
 
-* If the EMR cluster does not start, make sure that your AWS credentials are properly setup: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+* EC2 security groups: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html#emr-def-sec-groups
+
+*  AWS credentials are properly setup: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
