@@ -21,7 +21,7 @@ b) **A configured `CLI` account**. If your `CLI` account has been previously con
 
 ### EMR `cloudformation`
 
-Open your terminal and clone this repository: `git clone https://github.com/hms-dbmi/hail02-on-EMR`. 
+Open your terminal and clone this repository: `git clone https://github.com/hms-dbmi/hail-on-EMR`. 
  
 1. `cd` into the `hail02-on-EMR/src` folder and with the text editor of your preference open the configuration file: `hail02_EMR.yaml`. This file will be used to provide information necessary to create the cluster. Fill in the fields as necessary using your personal key and security groups (SG) information and save your changes. See configuration details below:
 
