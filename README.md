@@ -32,8 +32,8 @@ config:
   INSTANCE_TYPE: "c4.8xlarge" # Select the instance type, see table below. Or visit the instances types link in the FAQs section
   CORE_COUNT: "3" # Number of cores. Additional reference in the EC2 FAQs website 
   SUBNET_ID: "subnet-12345" # Select you private subnet. See the EC2 FAQs website
-  SLAVE_SECURITY_GROUP: "Create ElasticMapReduce-Slave-Private" # See the security groups link in the FAQs section
-  MASTER_SECURITY_GROUP: "Create ElasticMapReduce-Master-Private" # See the security groups link in the FAQs section
+  SLAVE_SECURITY_GROUP: "" # Creates a new group by default. See the security groups link in the FAQs section
+  MASTER_SECURITY_GROUP: "" # Creates a new group by default. See the security groups link in the FAQs section
   EC2_NAME_TAG: "my-hail-EMR" # Tags for the individual EC2 instances
   OWNER_TAG: "emr-owner" # EC2 owner tag
   PROJECT_TAG: "my-project" # Project tag
