@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x -e
 
 echo "Generating the EMR cluster. See log details at /tmp/cloudcreation_log.out"
 # https://serverfault.com/questions/103501/how-can-i-fully-log-all-bash-scripts-actions
