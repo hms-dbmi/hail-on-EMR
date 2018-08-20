@@ -18,7 +18,7 @@ a) **A valid EC2 key pair**. For additional details on how to create and use you
 
 b) A configured `CLI`. If your `CLI` has been previously configured, the tool will use this previously configured account. If you want to configure a new one, from your terminal type `aws configure`
 
-## EMR `cloudformation`
+### EMR `cloudformation`
 
 Open your terminal in MAC or Linux and clone this repository: `git clone https://github.com/hms-dbmi/hail02-on-EMR`. 
  
