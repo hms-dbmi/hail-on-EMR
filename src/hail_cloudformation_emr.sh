@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -x -e
 
 echo "Generating the EMR cluster. See log details at /tmp/cloudcreation_log.out"
@@ -8,19 +9,36 @@ exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/cloudcreation_log.out 2>&1
 
-# Check if pip is installed 
-PIP=$(which pip)
-if [ -z "$PIP" ]; then
-	echo "Installing pip..."
-	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-	python get-pip.py
-	rm get-pip.py
-fi 
+
+# Check if python3 is installed 
+PYTH==$(which python3)
+if [ -z "$PYTH" ]; then
+	BREW=$(which brew)
+	if [ -z "$BREW" ]; then
+		echo "\n\nInstalling Homebrew..."
+		sleep 1
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
+echo "\n\nInstalling Python3..."
+sleep 1
+brew install python3
+fi
+
+# Pip installed with the command: brew install python3
+# # Check if pip is installed 
+# PIP=$(which pip)
+# if [ -z "$PIP" ]; then
+# 	echo "Installing pip..."
+# 	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# 	python get-pip.py
+# 	rm get-pip.py
+# fi 
 
 # Install the AWS command tool
 AWS=$(which aws)
 if [ -z "$AWS" ]; then
 	printf "\n\nInstalling aws command tool...\n\n"
+	sleep 1
 	pip install awscli --upgrade --user -q
 fi
 
