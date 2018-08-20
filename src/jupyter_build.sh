@@ -21,7 +21,7 @@ sudo rm -fR /etc/sbt/conf
 # Run the installer
 ./jupyter_installer.sh \
 	--r \
-	--spark-version "2.2.0" \
+	--spark-version "2.3.0" \
 	--toree \
 	--ds-packages \
 	--password "avillach" \
