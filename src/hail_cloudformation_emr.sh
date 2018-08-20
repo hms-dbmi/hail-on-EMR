@@ -1,7 +1,5 @@
 #!/bin/bash -x -e
 
-set -x -e
-
 echo "Generating the EMR cluster. See log details at /tmp/cloudcreation_log.out"
 # https://serverfault.com/questions/103501/how-can-i-fully-log-all-bash-scripts-actions
 # Log setup
@@ -65,8 +63,8 @@ fi
 echo "Installing required packages..."
 pip install boto3 pandas botocore paramiko pyyaml -q #parallel-ssh 
 pip install -U pip -q 
-pip uninstall -y greenlet -q
-pip install -Iv greenlet==0.4.13 -q
+# pip uninstall -y greenlet -q
+# pip install -Iv greenlet==0.4.13 -q
 
 echo "Starting EMR cluster..."
 # cd /Users/carlos/Desktop/Harvard_2018/Code_and_Notes/AWS/cloudformation_Hail/
