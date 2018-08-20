@@ -2,7 +2,7 @@
 
 export SPARK_HOME=/usr/lib/spark
 export PYSPARK_PYTHON=python3
-export HAIL_HOME=/opt/hail02-on-EMR
+export HAIL_HOME=/opt/hail-on-EMR
 
 export PYTHONPATH="/home/hadoop/hail-python.zip:$SPARK_HOME/python:${SPARK_HOME}/python/lib/py4j-src.zip"
 echo "PYTHONPATH: ${PYTHONPATH}"
