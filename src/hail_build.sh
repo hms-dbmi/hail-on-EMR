@@ -1,4 +1,4 @@
-#!/bin/bash -x -e
+#!/bin/bash
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
