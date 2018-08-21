@@ -3,18 +3,21 @@
 echo "Generating the EMR cluster. See log details at /tmp/cloudcreation_log.out"
 
 # Check if python3 is installed 
-PYTH==$(which python3)
-if [ -z "$PYTH" ]; then
-	BREW=$(which brew)
+BREW=$(which brew)
 	if [ -z "$BREW" ]; then
 		echo "\n\nInstalling Homebrew..."
 		sleep 1
 		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
-echo "\n\nInstalling Python3..."
-sleep 1
-brew install python3
+PYTH==$(which python3)
+
+if [ -z "$PYTH" ]; then
+	echo "\n\nInstalling Python3..."
+	sleep 1
+	brew install python3
 fi
+
+python3 -m pip install --upgrade pip
 
 # Pip installed with the command: brew install python3
 # # Check if pip is installed 
@@ -27,12 +30,8 @@ fi
 # fi 
 
 # Install the AWS command tool
-AWS=$(which aws)
-if [ -z "$AWS" ]; then
-	printf "\n\nInstalling aws command tool...\n\n"
-	sleep 1
-	pip install awscli --upgrade --user -q
-fi
+pip install awscli --upgrade --user -q
+
 
 # Save the AWS Keys to the default folder 
 CREDENTIALS=$(ls  ~/.aws)
