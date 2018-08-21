@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/bash -x -e
 
-export $HAIL_HOME=/opt/hail-on-EMR
+export HAIL_HOME=/opt/hail-on-EMR
 cd $HAIL_HOME/src
 
 sudo rm -r hail

@@ -48,7 +48,13 @@ do
    ssh hadoop@${SLAVEIP} "python3 --version"
 done
 
+# Set the time zone for cronupdates 
+sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime
+# setup crontab for daily updates @ 4 am ET
+echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_log.out 2>&1 # min hr dom month dow" | crontab -
+
 sudo stop hadoop-yarn-resourcemanager; sleep 3; sudo start hadoop-yarn-resourcemanager 
+sudo chmod +x update_hail.sh
 sudo chmod +x jupyter_build.sh
 sudo chmod +x jupyter_run.sh
 sudo chmod +x jupyter_installer.sh
