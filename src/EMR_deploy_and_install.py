@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import boto3 #sudo python3 -m pip install boto3
 import pandas as pd
 import time
