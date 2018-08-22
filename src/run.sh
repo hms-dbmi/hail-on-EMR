@@ -51,10 +51,10 @@ else
 	echo "Using existing AWS credentials..."
 	echo "To reconfigure run: aws configure"
 	echo "For help visit: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html"
-	read -n 1 -s -r -p "Press any key to continue cloudformation"
+	read -n 1 -s -r -p "\n\nPress any key to continue cloudformation"
 fi
 
-echo "\n\nInstalling required packages..."
+echo "\n\nInstalling required packages"
 pip3 install boto3 pandas botocore paramiko pyyaml -q #parallel-ssh 
 # pip install -U pip -q 
 # pip uninstall -y greenlet -q

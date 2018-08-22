@@ -34,11 +34,13 @@ sudo chmod +x update_hail.sh
 sudo chmod +x jupyter_build.sh
 sudo chmod +x jupyter_run.sh
 sudo chmod +x jupyter_installer.sh
-sudo ./hail_build.sh
-chmod +x hail_install_python3.sh
-sudo ./hail_install_python3.sh 
+sudo chmod +x hail_install_python3.sh
 
+./update_hail.sh
 
+./hail_install_python3.sh 
+
+cd $HAIL_HOME/src
 # cd $HOME
 # wget -O hail-all-spark.jar https://storage.googleapis.com/hail-common/builds/devel/jars/hail-devel-ae9e34fb3cbf-Spark-2.2.0.jar
 # wget -O hail-python.zip https://storage.googleapis.com/hail-common/builds/devel/python/hail-devel-ae9e34fb3cbf.zip
@@ -49,7 +51,6 @@ do
    scp /home/hadoop/hail-* $SLAVEIP:/home/hadoop/
    scp hail_install_python3.sh hadoop@${SLAVEIP}:/tmp/hail_install_python3.sh
    ssh hadoop@${SLAVEIP} "sudo ls -al /tmp/hail_install_python3.sh"
-   ssh hadoop@${SLAVEIP} "sudo chmod +x /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "sudo /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "python3 --version"
 done
@@ -59,12 +60,9 @@ sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime
 # setup crontab for daily updates @ 4 am ET
 echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_log.out 2>&1 # min hr dom month dow" | crontab -
 
-sudo stop hadoop-yarn-resourcemanager; sleep 3; sudo start hadoop-yarn-resourcemanager 
 
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
-
-sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
-sudo chown hadoop:hadoop /opt
+# sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
 ./jupyter_build.sh
 ./jupyter_run.sh

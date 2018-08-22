@@ -5,12 +5,7 @@ cd $HAIL_HOME/src
 
 sudo rm -r hail
 sudo rm /etc/alternatives/jre/include/include
-sudo ./hail_build.sh
-
-cd hail
-
-cp $PWD/build/distributions/hail-python.zip $HOME
-cp $PWD/build/libs/hail-all-spark.jar $HOME
+./hail_build.sh
 
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2` 
 do
