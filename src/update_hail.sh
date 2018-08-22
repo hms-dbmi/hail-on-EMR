@@ -1,4 +1,4 @@
-#!/bin/bash -x -e
+#!/bin/bash
 
 export HAIL_HOME=/opt/hail-on-EMR
 cd $HAIL_HOME/src

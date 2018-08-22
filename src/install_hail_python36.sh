@@ -4,6 +4,7 @@ exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/cloudcreation_log.out 2>&1
 # Download the publicly available DBMI Hail builds
+
 # curl --output hail-all-spark.jar https://s3.amazonaws.com/avl-hail-73/hail_0.2_emr_5.10_spark_2.2.0/hail-all-spark.jar
 # curl --output hail-python.zip https://s3.amazonaws.com/avl-hail-73/hail_0.2_emr_5.10_spark_2.2.0/hail-python.zip
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2` 
@@ -28,10 +29,11 @@ export HAIL_HOME=/opt/hail-on-EMR
 # Update Python 3.6 in all the nodes in the cluster
 # First for the master node
 cd $HAIL_HOME/src
-chmod +x hail_install_python3.sh
-sudo ./hail_install_python3.sh 
 sudo chmod +x hail_build.sh
 sudo ./hail_build.sh
+chmod +x hail_install_python3.sh
+sudo ./hail_install_python3.sh 
+
 
 # cd $HOME
 # wget -O hail-all-spark.jar https://storage.googleapis.com/hail-common/builds/devel/jars/hail-devel-ae9e34fb3cbf-Spark-2.2.0.jar
