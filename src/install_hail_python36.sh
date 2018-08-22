@@ -30,6 +30,10 @@ export HAIL_HOME=/opt/hail-on-EMR
 # First for the master node
 cd $HAIL_HOME/src
 sudo chmod +x hail_build.sh
+sudo chmod +x update_hail.sh
+sudo chmod +x jupyter_build.sh
+sudo chmod +x jupyter_run.sh
+sudo chmod +x jupyter_installer.sh
 sudo ./hail_build.sh
 chmod +x hail_install_python3.sh
 sudo ./hail_install_python3.sh 
@@ -56,10 +60,7 @@ sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime
 echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_log.out 2>&1 # min hr dom month dow" | crontab -
 
 sudo stop hadoop-yarn-resourcemanager; sleep 3; sudo start hadoop-yarn-resourcemanager 
-sudo chmod +x update_hail.sh
-sudo chmod +x jupyter_build.sh
-sudo chmod +x jupyter_run.sh
-sudo chmod +x jupyter_installer.sh
+
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
 
 sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
