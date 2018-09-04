@@ -50,8 +50,8 @@ if [ -z "$CREDENTIALS" ]; then
 else 
 	echo "Using existing AWS credentials..."
 	echo "To reconfigure run: aws configure"
-	echo "For help visit: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html"
-	read -n 1 -s -r -p "\n\nPress any key to continue cloudformation"
+	echo "For help visit: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html\n\n"
+	read -n 1 -s -r -p "Press any key to continue cloudformation"
 fi
 
 echo "\n\nInstalling required packages"
