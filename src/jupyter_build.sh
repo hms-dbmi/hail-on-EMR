@@ -20,7 +20,7 @@ sudo rm -fR /etc/sbt/conf
 
 # Run the installer
 ./jupyter_installer.sh \
-	--r \
+	# --r \
 	--spark-version "2.3.0" \
 	--toree \
 	--ds-packages \
