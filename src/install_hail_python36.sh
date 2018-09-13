@@ -24,11 +24,11 @@ sudo chown hadoop:hadoop /opt
 cd /opt
 sudo yum install -y git  # In case git is not installed 
 git clone https://github.com/hms-dbmi/hail-on-EMR.git
-export HAIL_HOME=/opt/hail-on-EMR 
+export HAIL_HOME=/opt/hail-on-EMR
 
 # Update Python 3.6 in all the nodes in the cluster
 # First for the master node
-cd $HAIL_HOME/src
+cd $HAIL_HOME/src/hail/hail/
 sudo chmod +x hail_build.sh
 sudo chmod +x update_hail.sh
 sudo chmod +x jupyter_build.sh

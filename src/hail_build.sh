@@ -4,6 +4,7 @@ OUTPUT_PATH=""
 HAIL_VERSION="master"
 SPARK_VERSION="2.3.0"
 IS_MASTER=false
+export CXXFLAGS=-march=native
 
 if grep isMaster /mnt/var/lib/info/instance.json | grep true;
 then
@@ -39,7 +40,7 @@ if [ "$IS_MASTER" = true ]; then
   sudo yum install g++ cmake git -y
   sudo /usr/local/bin/pip install --upgrade pip
   git clone https://github.com/broadinstitute/hail.git
-  cd hail/
+  cd hail/hail/
   git checkout $HAIL_VERSION
 	
 	# src/scripts/context.py
