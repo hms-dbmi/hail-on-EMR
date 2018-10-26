@@ -2,7 +2,7 @@
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
-SPARK_VERSION="2.2.0"
+SPARK_VERSION="2.3.0"
 IS_MASTER=false
 export CXXFLAGS=-march=native
 

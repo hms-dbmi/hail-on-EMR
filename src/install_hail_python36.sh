@@ -23,6 +23,9 @@ sudo chmod 777 /opt/
 sudo chown hadoop:hadoop /opt
 cd /opt
 sudo yum install -y git  # In case git is not installed 
+# Fixes issue of missing lz4 
+sudo yum install lz4 
+sudo yum install lz4-devel
 git clone https://github.com/hms-dbmi/hail-on-EMR.git
 export HAIL_HOME=/opt/hail-on-EMR
 
