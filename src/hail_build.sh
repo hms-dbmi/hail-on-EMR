@@ -39,6 +39,9 @@ if [ "$IS_MASTER" = true ]; then
   sudo yum update -y
   sudo yum install g++ cmake git -y
   sudo /usr/local/bin/pip install --upgrade pip
+  # Fixes issue of missing lz4 
+  sudo yum install -y lz4
+  sudo yum install -y lz4-devel
   git clone https://github.com/broadinstitute/hail.git
   cd hail/hail/
   git checkout $HAIL_VERSION
