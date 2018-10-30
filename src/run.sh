@@ -27,7 +27,7 @@ if [ -z "$PYTH" ]; then
 	brew install python3
 fi
 
-python3 -m pip install --upgrade pip
+pip install --upgrade pip
 
 # Install the AWS command tool
 brew install awscli
