@@ -62,4 +62,4 @@ pip3 install boto3 pandas botocore paramiko pyyaml -q #parallel-ssh
 # pip install -Iv greenlet==0.4.13 -q
 
 echo "Starting EMR cluster. This operation takes 5-7 minutes..."
-python3 EMR_deploy_and_install.py
+python3 install2.py

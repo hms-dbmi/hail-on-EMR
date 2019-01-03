@@ -5,13 +5,14 @@ trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/cloudcreation_log.out 2>&1
 # Download the publicly available DBMI Hail builds
 
+echo $1
 # curl --output hail-all-spark.jar https://s3.amazonaws.com/avl-hail-73/hail_0.2_emr_5.10_spark_2.2.0/hail-all-spark.jar
 # curl --output hail-python.zip https://s3.amazonaws.com/avl-hail-73/hail_0.2_emr_5.10_spark_2.2.0/hail-python.zip
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2` 
 do
    # Distribute keys to slaves for hadoop account
-   scp -o "StrictHostKeyChecking no" ~/.ssh/id_rsa ${SLAVEIP}:/home/hadoop/.ssh/id_rsa
-   scp ~/.ssh/authorized_keys ${SLAVEIP}:/home/hadoop/.ssh/authorized_keys
+   scp -i $1 -o "StrictHostKeyChecking no" ~/.ssh/id_rsa ${SLAVEIP}:/home/hadoop/.ssh/id_rsa
+   scp -i $1 ~/.ssh/authorized_keys ${SLAVEIP}:/home/hadoop/.ssh/authorized_keys
    # Distribute the freshly built Hail files
 done
 
@@ -28,7 +29,7 @@ export HAIL_HOME=/opt/hail-on-EMR
 
 # Update Python 3.6 in all the nodes in the cluster
 # First for the master node
-cd $HAIL_HOME/src/hail/hail/
+cd $HAIL_HOME/src/
 sudo chmod +x hail_build.sh
 sudo chmod +x update_hail.sh
 sudo chmod +x jupyter_build.sh

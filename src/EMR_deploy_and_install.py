@@ -8,6 +8,7 @@ import botocore
 import paramiko
 import re
 import os
+import subprocess
 import yaml
 
 PATH=os.path.dirname(os.path.abspath(__file__))
@@ -15,16 +16,35 @@ PATH=os.path.dirname(os.path.abspath(__file__))
 c=yaml.load(open(PATH+"/hail02_EMR.yaml"))
 
 # Create cluster - EBS Volume 
-# command='aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin --tags \'Project='+c['config']['PROJECT_TAG']+'\' \'Owner='+c['config']['OWNER_TAG']+'\' \'Name='+c['config']['EC2_NAME_TAG']+'\' --ec2-attributes \'{"KeyName":"'+c['config']['KEY_NAME']+'","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"'+c['config']['SUBNET_ID']+'","EmrManagedSlaveSecurityGroup":"'+c['config']['SLAVE_SECURITY_GROUP']+'","EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' --service-role EMR_DefaultRole --release-label emr-5.13.0 --log-uri \''+c['config']['S3_BUCKET']+'\' --name \''+c['config']['EMR_CLUSTER_NAME']+'\' --instance-groups \'[{"InstanceCount":1,"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"MASTER","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Master Instance Group"},{"InstanceCount":'+c['config']['CORE_COUNT']+',"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"CORE","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Core Instance Group"}]\' --configurations \'[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]\' --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region us-east-1'
+# command='aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin --tags \'Project='+c['config']['PROJECT_TAG']+'\' \'Owner='+c['config']['OWNER_TAG']+'\' \'Name='+c['config']['EC2_NAME_TAG']+'\' --ec2-attributes \'{"KeyName":"'+c['config']['KEY_NAME']+'","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"'+c['config']['SUBNET_ID']+'","EmrManagedSlaveSecurityGroup":"'+c['config']['SLAVE_SECURITY_GROUP']+'","EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' --service-role EMR_DefaultRole --release-label emr-5.13.0 --log-uri \''+c['config']['S3_BUCKET']+'\' --name \''+c['config']['EMR_CLUSTER_NAME']+'\' --instance-groups \'[{"InstanceCount":1,"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"MASTER","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Master Instance Group"},{"InstanceCount":'+c['config']['CORE_COUNT']+',"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"CORE","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Core Instance Group"}]\' --configurations \'[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]\' --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region ap-southeast-1'
 
 # Create Cluster - Instance Store
-command='aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin --tags \'project='+c['config']['PROJECT_TAG']+'\' \'Owner='+c['config']['OWNER_TAG']+'\' \'Name='+c['config']['EC2_NAME_TAG']+'\' --ec2-attributes \'{"KeyName":"'+c['config']['KEY_NAME']+'","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"'+c['config']['SUBNET_ID']+'","EmrManagedSlaveSecurityGroup":"'+c['config']['SLAVE_SECURITY_GROUP']+'","EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' --service-role EMR_DefaultRole --enable-debugging --release-label emr-5.13.0 --log-uri \''+c['config']['S3_BUCKET']+'\' --name \''+c['config']['EMR_CLUSTER_NAME']+'\' --instance-groups \'[{"InstanceCount":1,"InstanceGroupType":"MASTER","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Master Instance Group"},{"InstanceCount":'+c['config']['CORE_COUNT']+',"InstanceGroupType":"CORE","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Core Instance Group"}]\' --configurations \'[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]\' --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region us-east-1'
+#command=r"""aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin --tags 'project="""+c['config']['PROJECT_TAG']+"""' 'Owner="""+c['config']['OWNER_TAG']+"""' 'Name="""+c['config']['EC2_NAME_TAG']+"""' --ec2-attributes '{"KeyName":" """+c['config']['KEY_NAME']+""" ","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":" """+c['config']['SUBNET_ID']+""" ","EmrManagedSlaveSecurityGroup":" """+c['config']['SLAVE_SECURITY_GROUP']+""" ","EmrManagedMasterSecurityGroup":" """+c['config']['MASTER_SECURITY_GROUP']+""" "}' --service-role EMR_DefaultRole --enable-debugging --release-label emr-5.13.0 --log-uri '"""+c['config']['S3_BUCKET']+"""' --name '"""+c['config']['EMR_CLUSTER_NAME']+"""' --instance-groups '[{"InstanceCount":1,"InstanceGroupType":"MASTER","InstanceType":" """+c['config']['INSTANCE_TYPE']+""" ","Name":"Master Instance Group"},{"InstanceCount":"""+c['config']['CORE_COUNT']+""","InstanceGroupType":"CORE","InstanceType":" """+c['config']['INSTANCE_TYPE']+""" ","Name":"Core Instance Group"}]' --configurations '[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]' --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region ap-southeast-1"""
+
+command=r"""aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin --tags 'project=chorusnpm-project' 'Owner=emr-owner' 'Name=my-hail-EMR' --ec2-attributes '{"KeyName":"chorusnpm_key","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"subnet-1760e573","EmrManagedSlaveSecurityGroup":"","EmrManagedMasterSecurityGroup":""}' --service-role EMR_DefaultRole --enable-debugging --release-label emr-5.13.0 --log-uri 's3n://npmchorus-gnomad/' --name 'my-hail-02-cluster' --instance-groups '[{"InstanceCount":1,"InstanceGroupType":"MASTER","InstanceType":"c4.2xlarge","Name":"Master Instance Group"},{"InstanceCount":3,"InstanceGroupType":"CORE","InstanceType":"c4.2xlarge","Name":"Core Instance Group"}]' --configurations '[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]' --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region ap-southeast-1"""
+
+#command='/bin/sleep 5 && echo "a"'
 
 print("\n\nYour AWS CLI export command:\n")
 print(command)
 
-cluster_id_json=os.popen(command).read()
-cluster_id=cluster_id_json.split(": \"",1)[1].split("\"\n")[0]
+#cluster_id_json=os.popen(command).read()
+#print("a")
+#print(cluster_id_json)
+#cluster_id=cluster_id_json.split(": \"",1)[1].split("\"\n")[0]
+process=subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+if process.poll() is None:
+    print("wait")
+    process.wait()
+
+if process.returncode == 0:
+	print("process.returncode:"+ str(process.returncode))
+	print("Done")
+
+#(stdout,stderr)=process.communicate()
+cluster_id_json=stdout
+print (cluster_id_json)
+cluster_id=cluster_id_json[0]
 print('\nClusterId: '+cluster_id+'\n')
 
 # Gives EMR cluster information
