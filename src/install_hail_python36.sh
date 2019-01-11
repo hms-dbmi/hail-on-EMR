@@ -24,7 +24,8 @@ sudo chmod 777 /opt/
 sudo chown hadoop:hadoop /opt
 cd /opt
 sudo yum install -y git  # In case git is not installed 
-git clone https://github.com/hms-dbmi/hail-on-EMR.git
+#git clone https://github.com/hms-dbmi/hail-on-EMR.git
+git clone https://github.com/Jack-Ow/hail-on-EMR.git
 export HAIL_HOME=/opt/hail-on-EMR
 
 # Update Python 3.6 in all the nodes in the cluster
@@ -49,8 +50,9 @@ cd $HAIL_HOME/src
 # Then for the slaves\core nodes
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
 do
-   scp /home/hadoop/hail-* $SLAVEIP:/home/hadoop/
+   scp -r /home/hadoop/hail-* $SLAVEIP:/home/hadoop/
    scp hail_install_python3.sh hadoop@${SLAVEIP}:/tmp/hail_install_python3.sh
+   ssh hadoop@${SLAVEIP} "chmod +x /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "sudo ls -al /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "sudo /tmp/hail_install_python3.sh"
    ssh hadoop@${SLAVEIP} "python3 --version"

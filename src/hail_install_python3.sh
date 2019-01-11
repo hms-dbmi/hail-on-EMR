@@ -2,7 +2,7 @@
 
 export PATH=$PATH:/usr/local/bin
 
-sudo yum update -y
+sudo yum update -y --skip-broken
 sudo yum install -y python36
 sudo yum install -y python36-devel
 sudo yum install -y python36-setuptools
@@ -39,8 +39,8 @@ ggplot"
 
 for WHEEL_NAME in $WHEELS
 do
-	sudo python -m pip install $WHEEL_NAME
-	sudo python3 -m pip install $WHEEL_NAME
+	sudo pip install $WHEEL_NAME
+	sudo pip3.6 install $WHEEL_NAME
 done
 
 
