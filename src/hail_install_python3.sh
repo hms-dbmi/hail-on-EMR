@@ -43,4 +43,5 @@ do
 	sudo pip3.6 install $WHEEL_NAME
 done
 
+alias python=/usr/bin/python3.6
 
