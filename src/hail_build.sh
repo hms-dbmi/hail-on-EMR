@@ -2,7 +2,7 @@
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
-SPARK_VERSION="2.3.0"
+SPARK_VERSION="2.3.2"
 IS_MASTER=false
 export CXXFLAGS=-march=native
 
@@ -45,12 +45,12 @@ if [ "$IS_MASTER" = true ]; then
   git clone https://github.com/broadinstitute/hail.git
   cd hail/hail/
   git checkout $HAIL_VERSION
-	
-	# src/scripts/context.py
-	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-7.b10.37.amzn1.x86_64/include /etc/alternatives/jre/include
 
-# Compile Spark 2.3.0
-if [ $SPARK_VERSION = "2.3.0" ]; then
+	# src/scripts/context.py
+	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.*.amzn1.x86_64/include /etc/alternatives/jre/include
+
+# Compile Spark 2.3.2
+if [ $SPARK_VERSION = "2.3.2" ]; then
   ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.6 shadowJar archiveZip	
 else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
 fi
