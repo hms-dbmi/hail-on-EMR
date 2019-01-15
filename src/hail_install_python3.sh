@@ -39,8 +39,8 @@ ggplot"
 
 for WHEEL_NAME in $WHEELS
 do
-	sudo pip install $WHEEL_NAME
-	sudo pip3.6 install $WHEEL_NAME
+	pip install $WHEEL_NAME
+	pip3.6 install $WHEEL_NAME
 done
 
 
