@@ -51,7 +51,7 @@ if [ "$IS_MASTER" = true ]; then
 
 # Compile Spark 2.3.0
 if [ $SPARK_VERSION = "2.3.2" ]; then
-  ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.6 shadowJar archiveZip	
+  ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
 else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
 fi
 
