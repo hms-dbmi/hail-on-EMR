@@ -35,6 +35,7 @@ pprint
 bokeh
 scikit-learn
 matplotlib
+requests
 ggplot"
 
 for WHEEL_NAME in $WHEELS
