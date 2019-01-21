@@ -83,7 +83,7 @@ error_msg ()
 
 # some defaults
 RUBY_KERNEL=false
-R_KERNEL=TRUE
+R_KERNEL=true
 JULIA_KERNEL=false
 TOREE_KERNEL=true
 TORCH_KERNEL=false
@@ -119,7 +119,7 @@ JS_KERNEL=false
 NO_JUPYTER=false
 INSTALL_DASK=false
 INSTALL_PY3_PKGS=true
-APACHE_SPARK_VERSION="2.3.0"
+APACHE_SPARK_VERSION="2.3.2"
 BIGDL=false
 MXNET=false
 DL4J=false
@@ -613,7 +613,7 @@ fi
 if [ "$R_KERNEL" = true ] || [ "$TOREE_KERNEL" = true ]; then
   sudo yum install -y R-devel readline-dev
   aws s3 cp s3://aws-bigdata-blog/artifacts/aws-blog-emr-jupyter/rpy2-2.8.6.tar.gz /mnt/
-  sudo python -m pip install /mnt/rpy2-2.8.6.tar.gz
+  sudo python -m pip install -Iv /mnt/rpy2-2.8.6.tar.gz
 
   if [ ! -f /tmp/Renvextra ]; then # check if the rstudio ba was run, it does this already 
    sudo sed -i "s/make/make -j $NPROC/g" /usr/lib64/R/etc/Renviron
@@ -861,7 +861,7 @@ R_SCRIPT
   export SPARK_HOME="/usr/lib/spark"
   SPARK_PACKAGES=""
 
-  PYSPARK_PYTHON="python3"
+  PYSPARK_PYTHON="python3.6"
   
   if [ ! "$USER_SPARK_OPTS" = "" ]; then
     SPARK_OPTS=$USER_SPARK_OPTS

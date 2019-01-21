@@ -1,12 +1,12 @@
 #!/bin/bash
 
 export SPARK_HOME=/usr/lib/spark
-export PYSPARK_PYTHON=python3
+export PYSPARK_PYTHON=python3.6
 
 export PYTHONPATH="/home/hadoop/hail-python.zip:$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-src.zip"
 echo "PYTHONPATH: ${PYTHONPATH}"
 
-export PYSPARK_PYTHON=python3
+export PYSPARK_PYTHON=python3.6
 echo "PYSPARK_PYTHON: ${PYSPARK_PYTHON}"
 
 export ASSEMBLY_JAR=`ls /usr/share/aws/emr/emrfs/lib/emrfs-hadoop-assembly*`
@@ -24,7 +24,7 @@ sudo rm -fR /etc/sbt/conf
 # Run the installer
 ./jupyter_installer.sh \
 	# --r \
-	--spark-version "2.3.0" \
+	--spark-version "2.3.2" \
 	--toree \
 	--ds-packages \
 	--password "avillach" \
