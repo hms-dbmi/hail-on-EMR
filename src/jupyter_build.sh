@@ -1,12 +1,12 @@
 #!/bin/bash
 
 export SPARK_HOME=/usr/lib/spark
-export PYSPARK_PYTHON=python3.6
+export PYSPARK_PYTHON=python3
 
 export PYTHONPATH="/home/hadoop/hail-python.zip:$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-src.zip"
 echo "PYTHONPATH: ${PYTHONPATH}"
 
-export PYSPARK_PYTHON=python3.6
+export PYSPARK_PYTHON=python3
 echo "PYSPARK_PYTHON: ${PYSPARK_PYTHON}"
 
 export ASSEMBLY_JAR=`ls /usr/share/aws/emr/emrfs/lib/emrfs-hadoop-assembly*`

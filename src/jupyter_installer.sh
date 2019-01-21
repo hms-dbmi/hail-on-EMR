@@ -612,6 +612,9 @@ fi
 
 if [ "$R_KERNEL" = true ] || [ "$TOREE_KERNEL" = true ]; then
   sudo yum install -y R-devel readline-dev
+  sudo ln -s /usr/lib/gcc/x86_64-amazon-linux/6.4.1/libgomp.spec /usr/lib64/libgomp.spec
+  sudo ln -s /usr/lib/gcc/x86_64-amazon-linux/6.4.1/libgomp.a /usr/lib64/libgomp.a
+  sudo ln -s /usr/lib64/libgomp.so.1.0.0 /usr/lib64/libgomp.so
   aws s3 cp s3://aws-bigdata-blog/artifacts/aws-blog-emr-jupyter/rpy2-2.8.6.tar.gz /mnt/
   sudo python -m pip install -Iv /mnt/rpy2-2.8.6.tar.gz
 
@@ -861,7 +864,7 @@ R_SCRIPT
   export SPARK_HOME="/usr/lib/spark"
   SPARK_PACKAGES=""
 
-  PYSPARK_PYTHON="python3.6"
+  PYSPARK_PYTHON="python3"
   
   if [ ! "$USER_SPARK_OPTS" = "" ]; then
     SPARK_OPTS=$USER_SPARK_OPTS
