@@ -70,3 +70,5 @@ echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_l
 ./jupyter_build.sh
 ./jupyter_run.sh
 
+./VEP_run.sh
+
