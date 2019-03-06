@@ -11,7 +11,7 @@ export PYSPARK_PYTHON=python3
 echo "PYSPARK_PYTHON: ${PYSPARK_PYTHON}"
 
 
-JAR_PATH="/home/hadoop/hail-all-spark.jar:/usr/share/aws/emr/emrfs/lib/emrfs-hadoop-assembly-2.*.0.jar"
+JAR_PATH="/home/hadoop/hail-all-spark.jar:/usr/share/aws/emr/emrfs/lib/emrfs-hadoop-assembly-2.28.0.jar"
 export PYSPARK_SUBMIT_ARGS="--conf spark.driver.extraClassPath='$JAR_PATH' --conf spark.executor.extraClassPath='$JAR_PATH' pyspark-shell"
 echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 
