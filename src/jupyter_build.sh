@@ -22,14 +22,25 @@ sudo rm -fR /mnt/incubator-toree
 sudo rm -fR /etc/sbt/conf
 
 # Run the installer
+#./jupyter_installer.sh \
+#	# --r \
+#	--spark-version "2.3.2" \
+#	--toree \
+#	--ds-packages \
+#	--password "avillach" \
+#	--port 8192 \
+#	--s3fs \
+#	--spark-opts "--jars ${JAR_PATH} --py-files /home/hadoop/hail-python.zip"
+
+# Run the installer
 ./jupyter_installer.sh \
-	# --r \
-	--spark-version "2.3.2" \
-	--toree \
-	--ds-packages \
-	--password "avillach" \
-	--port 8192 \
-	--s3fs \
-	--spark-opts "--jars ${JAR_PATH} --py-files /home/hadoop/hail-python.zip"
+        --spark-version "2.3.2" \
+        --toree \
+        --ds-packages \
+        --password "avillach" \
+        --port 8192 \
+        --s3fs \
+        --spark-opts "--jars ${JAR_PATH} --py-files /home/hadoop/hail-python.zip"
+
 	
 # ./jupyter_extraRlibraries_install.sh # Not necessary as they are defined in the jupyter_installer.sh

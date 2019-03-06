@@ -3,6 +3,7 @@
 export SPARK_HOME=/usr/lib/spark
 export PYSPARK_PYTHON=python3
 export HAIL_HOME=/opt/hail-on-EMR
+export HOME=/home/hadoop
 
 export PYTHONPATH="/home/hadoop/hail-python.zip:$SPARK_HOME/python:${SPARK_HOME}/python/lib/py4j-src.zip"
 echo "PYTHONPATH: ${PYTHONPATH}"
@@ -18,9 +19,9 @@ echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 sudo mkdir -p $HOME/.jupyter
 cp /opt/hail-on-EMR/src/jupyter_notebook_config.py $HOME/.jupyter/
 
-sudo mkdir -p $HAIL_HOME/notebook/
-sudo chmod -R 777 $HAIL_HOME/notebook
-cd $HAIL_HOME/notebook/
+sudo mkdir -p $HOME/notebook/
+sudo chmod -R 777 $HOME/notebook
+cd $HOME/notebook/
 
 JUPYTERPID=`cat /tmp/jupyter_notebook.pid`
 kill $JUPYTERPID
