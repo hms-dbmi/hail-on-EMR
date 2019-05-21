@@ -610,7 +610,7 @@ if [ "$TORCH_KERNEL" = true ]; then
   set -e
 fi
 
-if [ "$R_KERNEL" = true ] || [ "$TOREE_KERNEL" = true ]; then
+if [ "$R_KERNEL" = true ]; then
   sudo yum install -y R-devel readline-dev
   sudo ln -s /usr/lib/gcc/x86_64-amazon-linux/6.4.1/libgomp.spec /usr/lib64/libgomp.spec
   sudo ln -s /usr/lib/gcc/x86_64-amazon-linux/6.4.1/libgomp.a /usr/lib64/libgomp.a
