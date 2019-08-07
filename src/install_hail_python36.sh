@@ -59,9 +59,9 @@ do
 done
 
 # Set the time zone for cronupdates 
-sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime
+#sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime
 # setup crontab for daily updates @ 4 am ET
-echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_log.out 2>&1 # min hr dom month dow" | crontab -
+#echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_log.out 2>&1 # min hr dom month dow" | crontab -
 
 
 echo 'export PYSPARK_PYTHON=python3 
@@ -98,7 +98,7 @@ export PYSPARK_SUBMIT_ARGS="\
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
 # sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
-./jupyter_build.sh
+#./jupyter_build.sh
 ./jupyter_run.sh
 
 #./VEP_run.sh

@@ -2,7 +2,7 @@
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
-SPARK_VERSION="2.3.2"
+SPARK_VERSION="2.4.2"
 IS_MASTER=false
 export CXXFLAGS=-march=native
 
@@ -38,7 +38,7 @@ done
 if [ "$IS_MASTER" = true ]; then
   sudo yum update -y
   sudo yum install g++ cmake git -y
-  sudo /usr/local/bin/pip install --upgrade pip
+  sudo /usr/bin/pip install --upgrade pip
   # Fixes issue of missing lz4 
   sudo yum install -y lz4
   sudo yum install -y lz4-devel
@@ -49,8 +49,8 @@ if [ "$IS_MASTER" = true ]; then
 	# src/scripts/context.py
 	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.*.amzn1.x86_64/include /etc/alternatives/jre/include
 
-# Compile Spark 2.3.0
-if [ $SPARK_VERSION = "2.3.2" ]; then
+# Compile Spark 2.4.2
+if [ $SPARK_VERSION = "2.4.2" ]; then
   ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
 else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
 fi
