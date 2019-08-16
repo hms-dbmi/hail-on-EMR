@@ -74,7 +74,7 @@ def launch_emr(cluster_id, c):
     # Execute a command(cmd) after connecting/ssh to an instance
     stdin, stdout, stderr = client.exec_command('cd /home/hadoop/')
     stdin, stdout, stderr = client.exec_command('chmod +x install_hail_python36.sh')
-    #stdin, stdout, stderr = client.exec_command('./install_hail_python36.sh %s'% c['config']['KEY_NAME']+'.pem')
+    stdin, stdout, stderr = client.exec_command('./install_hail_python36.sh %s'% c['config']['KEY_NAME']+'.pem')
     # close the client connection
     client.close()
 
