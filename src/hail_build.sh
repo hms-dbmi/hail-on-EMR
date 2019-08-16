@@ -1,4 +1,5 @@
 #!/bin/bash
+echo '### HAIL_BUILD.SH ###'
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
