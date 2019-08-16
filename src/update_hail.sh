@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "### UPDATE_HAIL.SH ###'
+echo '### UPDATE_HAIL.SH ###'
 
 export HAIL_HOME=/opt/hail-on-EMR
 cd $HAIL_HOME/src
