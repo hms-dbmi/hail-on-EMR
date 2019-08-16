@@ -26,8 +26,9 @@ sudo chown hadoop:hadoop /opt
 cd /opt
 sudo yum install -y git  # In case git is not installed 
 git clone https://github.com/Jack-Ow/hail-on-EMR.git
-git checkout 5.24
 export HAIL_HOME=/opt/hail-on-EMR
+cd $HAIL_HOME
+git checkout 5.24
 
 # Update Python 3.6 in all the nodes in the cluster
 # First for the master node
