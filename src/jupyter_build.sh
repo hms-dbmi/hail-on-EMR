@@ -39,7 +39,7 @@ sudo rm -fR /etc/sbt/conf
         --spark-version "2.4.2" \
         --toree \
         --ds-packages \
-        --password ${JUPYTER_PASSWORD} \
+        --password "avillach" \
         --port 8192 \
         --s3fs \
         --spark-opts "--jars ${JAR_PATH} --py-files /home/hadoop/hail-python.zip"
