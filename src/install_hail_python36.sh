@@ -107,7 +107,7 @@ export PYSPARK_SUBMIT_ARGS="\
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
 # sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
-#./jupyter_build.sh
+./jupyter_build.sh
 ./jupyter_run.sh
 
 #./VEP_run.sh
