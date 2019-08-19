@@ -16,6 +16,8 @@ echo $JAR_PATH
 export PYSPARK_SUBMIT_ARGS="--conf spark.driver.extraClassPath='$JAR_PATH' --conf spark.executor.extraClassPath='$JAR_PATH' pyspark-shell"
 echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 
+export JUPYTER_PASSWORD=`cat /opt/hail-on-EMR/src/jupyter_pw`
+echo $JUPYTER_PASSWORD
 # In case this is a repeated run
 sudo userdel jupyter
 sudo rm -fR /mnt/incubator-toree
@@ -37,7 +39,7 @@ sudo rm -fR /etc/sbt/conf
         --spark-version "2.4.2" \
         --toree \
         --ds-packages \
-        --password "avillach" \
+        --password JUPYTER_PASSWORD \
         --port 8192 \
         --s3fs \
         --spark-opts "--jars ${JAR_PATH} --py-files /home/hadoop/hail-python.zip"
