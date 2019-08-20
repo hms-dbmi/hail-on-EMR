@@ -62,8 +62,10 @@ def launch_emr(cluster_id, c):
     # Copy the installation script into the master
     print('PATH:' + PATH)
     command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/install_hail_python36.sh hadoop@'+master_dns+':/home/hadoop'
+    command2='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/jupyter_pw hadoop@'+master_dns+':/home/hadoop/'
     print (command)
     os.system(command)
+    os.system(command2)
 
     print('Installing software...')
     key = paramiko.RSAKey.from_private_key_file(c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem')

@@ -16,7 +16,7 @@ echo $JAR_PATH
 export PYSPARK_SUBMIT_ARGS="--conf spark.driver.extraClassPath='$JAR_PATH' --conf spark.executor.extraClassPath='$JAR_PATH' pyspark-shell"
 echo "PYSPARK_SUBMIT_ARGS: ${PYSPARK_SUBMIT_ARGS}"
 
-export JUPYTER_PASSWORD=`cat /opt/hail-on-EMR/src/jupyter_pw`
+export JUPYTER_PASSWORD=`cat /home/hadoop/jupyter_pw`
 echo $JUPYTER_PASSWORD
 # In case this is a repeated run
 sudo userdel jupyter
