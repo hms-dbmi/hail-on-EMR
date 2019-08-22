@@ -284,7 +284,7 @@ sudo puppet module install spantree-upstart
 RELEASE=$(cat /etc/system-release)
 REL_NUM=$(ruby -e "puts '$RELEASE'.split.last")
 
-echo '### ${USE_CACHED_DEPS} ###'
+echo ### ${USE_CACHED_DEPS} ###
 if [ "$USE_CACHED_DEPS" = true ]; then
   cd /mnt
   aws s3 cp s3://aws-bigdata-blog/artifacts/aws-blog-emr-jupyter/jupyter-deps.zip .
@@ -295,7 +295,7 @@ if [ "$USE_CACHED_DEPS" = true ]; then
   rm yum-rpm-cache-$REL_NUM.zip
 fi
 
-echo '### ${R_REPOS} = ${R_REPOS_LOCAL} ###'
+echo ### ${R_REPOS} = ${R_REPOS_LOCAL} ###
 if [ "$R_REPOS" = "$R_REPOS_LOCAL" ]; then
   cd /mnt
   #aws s3 cp s3://aws-bigdata-blog/artifacts/aws-blog-emr-jupyter/miniCRAN-20170516.zip miniCRAN.zip
@@ -322,7 +322,7 @@ fi
 
 export MAKE="make -j $NPROC"
 
-echo '### ${USE_CACHED_DEPS} ###'
+echo ### ${USE_CACHED_DEPS} ###
 sudo yum remove -y kernel-4.9.27-14.31.amzn1.x86_64 # EMR 5.6
 if [ "$USE_CACHED_DEPS" = true ]; then
   sudo yum install -y libcurl-devel # workaround for EMR 5.9 until libcurl cache is fixed
@@ -337,7 +337,7 @@ else
   sudo yum install -y bzip2 autoconf automake libtool bison iconv-devel sqlite-devel
 fi
 
-echo '### ${PYTHON3} ###'
+echo ### ${PYTHON3} ###
 cd /mnt
 PYTHON3=false
 if [ "$PYTHON3" = true ]; then # this will break bigtop/puppet which relies on python 2, so disable with the line above
@@ -356,7 +356,7 @@ else
   fi
 fi
 
-echo '### ${JS_KERNEL} ###'
+echo ### ${JS_KERNEL} ###
 export NODE_PATH='/usr/lib/node_modules'
 if [ "$JS_KERNEL" = true ]; then
   sudo python -m pip install jinja2 tornado jsonschema pyzmq
@@ -370,7 +370,7 @@ fi
 TF_BINARY_URL_PY3="https://storage.googleapis.com/tensorflow/linux/$CPU_GPU/tensorflow$GPUU-1.6.0-cp34-cp34m-linux_x86_64.whl"
 TF_BINARY_URL="https://storage.googleapis.com/tensorflow/linux/$CPU_GPU/tensorflow$GPUU-1.6.0-cp27-none-linux_x86_64.whl"
 
-echo '### ${INSTALL_PY3_PKGS} ###'
+echo ### ${INSTALL_PY3_PKGS} ###
 sudo python3 -m pip install jupyter
 sudo ln -sf /usr/local/bin/ipython /usr/bin/
 sudo ln -sf /usr/local/bin/jupyter /usr/bin/
@@ -384,7 +384,7 @@ else
   # sudo python -m pip install google-cloud==0.32.0 mrjob || true # workaround the possible failure
 fi
 
-echo '### ${DS_PACKAGES} ###'
+echo ### ${DS_PACKAGES} ###
 if [ "$DS_PACKAGES" = true ]; then
   # Python
   if [ "$INSTALL_PY3_PKGS" = true ]; then
@@ -398,7 +398,7 @@ if [ "$DS_PACKAGES" = true ]; then
   fi
 fi
 
-echo '### ${ML_PACKAGES} ###'
+echo ### ${ML_PACKAGES} ###
 if [ "$ML_PACKAGES" = true ]; then
   if [ "$INSTALL_PY3_PKGS" = true ]; then
     sudo python3 -m pip install mxnet sagemaker
@@ -417,7 +417,7 @@ if [ "$ML_PACKAGES" = true ]; then
   fi
 fi
 
-echo '### ${PYTHON_PACKAGES} ###'
+echo ### ${PYTHON_PACKAGES} ###
 if [ ! "$PYTHON_PACKAGES" = "" ]; then
   if [ "$INSTALL_PY3_PKGS" = true ]; then
     sudo python3 -m pip install $PYTHON_PACKAGES || true
@@ -426,7 +426,7 @@ if [ ! "$PYTHON_PACKAGES" = "" ]; then
   fi
 fi
 
-echo '### ${BIGDL} ###'
+echo ### ${BIGDL} ###
 if [ "$BIGDL" = true ]; then
   aws s3 cp s3://tomzeng/maven/apache-maven-3.3.3-bin.tar.gz .
   tar xvfz apache-maven-3.3.3-bin.tar.gz
@@ -443,7 +443,7 @@ if [ "$BIGDL" = true ]; then
   /usr/local/bin/tensorboard --debug INFO --logdir /tmp/bigdl_summaries/ > /tmp/tensorboard_bigdl.log 2>&1 &
 fi
 
-echo '### ${JULIA_KERNEL} ###'
+echo ### ${JULIA_KERNEL} ###
 
 if [ "$JULIA_KERNEL" = true ]; then
   # Julia install
@@ -467,7 +467,7 @@ if [ "$JULIA_KERNEL" = true ]; then
   sudo cp -pr include/* /usr/include/
 fi
 
-echo '### ${INSTALL_DASK} ###'
+echo ### ${INSTALL_DASK} ###
 if [ "$INSTALL_DASK" = true ]; then
   if [ "$INSTALL_PY3_PKGS" = true ]; then
     sudo python3 -m pip install dask[complete] distributed
@@ -488,7 +488,7 @@ fi
 
 # only run below on master instance
 if [ "$IS_MASTER" = true ]; then
-echo '### ${RUBY_KERNEL} ###'
+echo ### ${RUBY_KERNEL} ###
 if [ "$RUBY_KERNEL" = true ]; then
   cd /mnt
   if [ "$USE_CACHED_DEPS" != true ]; then
@@ -525,7 +525,7 @@ fi
 sed -i '/c.NotebookApp.port/d' ~/.jupyter/jupyter_notebook_config.py
 echo "c.NotebookApp.port = $JUPYTER_PORT" >> ~/.jupyter/jupyter_notebook_config.py
 
-echo '### ${JUPYTER_PASSWORD} ###'
+echo ### ${JUPYTER_PASSWORD} ###
 if [ ! "$JUPYTER_PASSWORD" = "" ]; then
   sed -i '/c.NotebookApp.password/d' ~/.jupyter/jupyter_notebook_config.py
   HASHED_PASSWORD=$(python3 -c "from notebook.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))")
@@ -538,7 +538,7 @@ fi
 echo "c.Authenticator.admin_users = {'$JUPYTER_HUB_DEFAULT_USER'}" >> ~/.jupyter/jupyter_notebook_config.py
 echo "c.LocalAuthenticator.create_system_users = True" >> ~/.jupyter/jupyter_notebook_config.py
 
-echo '### ${SSL} ###'
+echo ### ${SSL} ###
 
 if [ "$SSL" = true ]; then
   #NOTE - replace server.cert and server.key with your own cert and key files
@@ -566,7 +566,7 @@ sudo python3 -m pip install metakernel
 sudo python3 -m pip install bash_kernel
 sudo python3 -m bash_kernel.install
 
-echo '### ${JS_KERNEL} ###'
+echo ### ${JS_KERNEL} ###
 
 # Javascript/CoffeeScript kernels
 if [ "$JS_KERNEL" = true ]; then
@@ -590,7 +590,7 @@ sudo python3 -m pip install pyeda # only work for python3
 sudo python -m pip install gvmagic py_d3
 sudo python -m pip install ipython-sql
 
-echo '### ${JULIA_KERNEL} ###'
+echo ### ${JULIA_KERNEL} ###
 
 if [ "$JULIA_KERNEL" = true ]; then
   julia -e 'Pkg.add("IJulia")'
@@ -606,7 +606,7 @@ if [ "$JULIA_KERNEL" = true ]; then
   #julia -e 'Pkg.clone("https://github.com/dfdx/Spark.jl"); Pkg.build("Spark"); Pkg.checkout("JavaCall")'
 fi
 
-echo '### ${TORCH_KERNEL} ###'
+echo ### ${TORCH_KERNEL} ###
 
 # iTorch depends on Torch which is installed with --ml-packages
 if [ "$TORCH_KERNEL" = true ]; then
@@ -635,9 +635,10 @@ if [ "$TORCH_KERNEL" = true ]; then
   set -e
 fi
 
-echo '### ${R_KERNEL} n ${TOREE_KERNEL} ###'
+echo ### ${R_KERNEL} n ${TOREE_KERNEL} ###
 
-if [ "$R_KERNEL" = true ]|| [ "$TOREE_KERNEL" = true ]; then
+if [ "$R_KERNEL" = true ] || [ "$TOREE_KERNEL" = true ]; 
+then
   sudo yum install -y R-devel readline-dev
   sudo ln -s /usr/lib/gcc/x86_64-amazon-linux/6.4.1/libgomp.spec /usr/lib64/libgomp.spec
   sudo ln -s /usr/lib/gcc/x86_64-amazon-linux/6.4.1/libgomp.a /usr/lib64/libgomp.a
@@ -667,7 +668,7 @@ if [ "$R_KERNEL" = true ]; then
 R_SCRIPT
 fi
 
-echo '### ${NOTEBOOK_DIR} ###'
+echo ### ${NOTEBOOK_DIR} ###
 
 if [ ! "$NOTEBOOK_DIR" = "" ]; then
   NOTEBOOK_DIR="${NOTEBOOK_DIR%/}/" # remove trailing / if exists then add /
@@ -767,7 +768,7 @@ if [ ! "$JUPYTER_HUB_DEFAULT_USER" = "" ]; then
   sudo adduser $JUPYTER_HUB_DEFAULT_USER
 fi
 
-echo '### ${COPY_SAMPLES} ###'
+echo ### ${COPY_SAMPLES} ###
 if [ "$COPY_SAMPLES" = true ]; then
   cd ~
   if [ "$NOTEBOOK_DIR_S3" = true ]; then
