@@ -6,7 +6,7 @@ cd $HAIL_HOME/src
 
 sudo rm -r hail
 sudo rm /etc/alternatives/jre/include/include
-./hail_build.sh --hail-version 5.24
+./hail_build.sh 
 
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2` 
 do

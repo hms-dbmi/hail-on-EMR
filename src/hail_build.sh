@@ -3,7 +3,7 @@ echo '### HAIL_BUILD.SH ###'
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
-SPARK_VERSION="2.4.2"
+SPARK_VERSION="2.4.0"
 IS_MASTER=false
 export CXXFLAGS=-march=native
 
@@ -24,7 +24,7 @@ while [ $# -gt 0 ]; do
       ;;
     --spark-version)
       shift
-      SPARK_VERSION=$1
+      SPARK_VERSION=5.23
       ;;
     -*)
       error_msg "unrecognized option: $1"
@@ -55,7 +55,7 @@ if [ $SPARK_VERSION = "2.4.0" ]; then
   make clean
   make wheel
   HAIL_WHEEL=`ls /opt/hail-on-EMR/src/hail/hail/build/deploy/dist | grep "whl"`
-  sudo python3 -m pip install --no-deps /opt/hail-on-AWS-spot-instances/src/hail/hail/build/deploy/dist/$HAIL_WHEEL
+  sudo python3 -m pip install --no-deps /opt/hail-on-EMR/src/hail/hail/build/deploy/dist/$HAIL_WHEEL
 else
   ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
   cp $PWD/build/distributions/hail-python.zip $HOME
@@ -63,3 +63,4 @@ else
 #else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
 fi
 
+fi
