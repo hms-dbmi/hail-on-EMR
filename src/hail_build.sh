@@ -43,9 +43,8 @@ if [ "$IS_MASTER" = true ]; then
   # Fixes issue of missing lz4 
   sudo yum install -y lz4
   sudo yum install -y lz4-devel
-  git clone https://github.com/broadinstitute/hail.git
+  git clone --single-branch --branch 5.24  https://github.com/broadinstitute/hail.git
   cd hail/hail/
-  git checkout 5.24
 	
 	# src/scripts/context.py
 	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.*.amzn1.x86_64/include /etc/alternatives/jre/include
