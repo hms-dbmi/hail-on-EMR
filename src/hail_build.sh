@@ -43,7 +43,7 @@ if [ "$IS_MASTER" = true ]; then
   # Fixes issue of missing lz4 
   sudo yum install -y lz4
   sudo yum install -y lz4-devel
-  git clone --single-branch --branch 5.24  https://github.com/broadinstitute/hail.git
+  git clone https://github.com/broadinstitute/hail.git
   cd hail/hail/
 	
 	# src/scripts/context.py
