@@ -25,10 +25,9 @@ sudo chmod 777 /opt/
 sudo chown hadoop:hadoop /opt
 cd /opt
 sudo yum install -y git  # In case git is not installed 
-git clone https://github.com/Jack-Ow/hail-on-EMR.git
+git clone --single-branch --branch 5.24  https://github.com/Jack-Ow/hail-on-EMR.git
 export HAIL_HOME=/opt/hail-on-EMR
 cd $HAIL_HOME
-git checkout 5.24
 
 # Update Python 3.6 in all the nodes in the cluster
 # First for the master node
@@ -107,8 +106,8 @@ export PYSPARK_SUBMIT_ARGS="\
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
 # sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
-./jupyter_build.sh
-./jupyter_run.sh
+#./jupyter_build.sh
+#./jupyter_run.sh
 
 #./VEP_run.sh
 
