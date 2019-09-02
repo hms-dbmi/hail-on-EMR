@@ -72,37 +72,6 @@ done
 #echo "00  4  *  *  * /opt/hail-on-EMR/src/update_hail.sh >> /tmp/cloudcreation_log.out 2>&1 # min hr dom month dow" | crontab -
 
 
-echo 'export PYSPARK_PYTHON=python3 
-export SPARK_HOME=/usr/lib/spark/
-export HAIL_HOME=/opt/hail-on-EMR/src/hail/hail
-export PYTHONPATH="${PYTHONPATH:+$PYTHONPATH:}$HAIL_HOME/build/distributions/hail-python.zip"
-export PYTHONPATH="$PYTHONPATH:$SPARK_HOME/python"
-export PYTHONPATH="$PYTHONPATH:$SPARK_HOME/python/lib/py4j-*-src.zip"
-## PYSPARK_SUBMIT_ARGS is used by ipython and jupyter
-export PYSPARK_SUBMIT_ARGS="\
-  --jars $HAIL_HOME/build/libs/hail-all-spark.jar \
-  --conf spark.driver.extraClassPath=\"$HAIL_HOME/build/libs/hail-all-spark.jar\" \
-  --conf spark.executor.extraClassPath=./hail-all-spark.jar \
-  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
-  --conf spark.kryo.registrator=is.hail.kryo.HailKryoRegistrator
-  pyspark-shell" ' >> .bashrc
-
-sudo echo 'export PYSPARK_PYTHON=python3 
-export SPARK_HOME=/usr/lib/spark/
-export HAIL_HOME=/opt/hail-on-EMR/src/hail/hail
-export PYTHONPATH="${PYTHONPATH:+$PYTHONPATH:}$HAIL_HOME/build/distributions/hail-python.zip"
-export PYTHONPATH="$PYTHONPATH:$SPARK_HOME/python"
-export PYTHONPATH="$PYTHONPATH:$SPARK_HOME/python/lib/py4j-*-src.zip"
-## PYSPARK_SUBMIT_ARGS is used by ipython and jupyter
-export PYSPARK_SUBMIT_ARGS="\
-  --jars $HAIL_HOME/build/libs/hail-all-spark.jar \
-  --conf spark.driver.extraClassPath=\"$HAIL_HOME/build/libs/hail-all-spark.jar\" \
-  --conf spark.executor.extraClassPath=./hail-all-spark.jar \
-  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
-  --conf spark.kryo.registrator=is.hail.kryo.HailKryoRegistrator
-  pyspark-shell" ' >> /root/.bashrc
-
-
 # sudo chmod +x jupyter_extraRlibraries_install.sh. 
 # sudo chown hadoop:hadoop /usr/local/bin/jupyter-notebook
 
