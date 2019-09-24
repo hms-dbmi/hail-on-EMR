@@ -24,7 +24,7 @@ while [ $# -gt 0 ]; do
       ;;
     --spark-version)
       shift
-      SPARK_VERSION=5.23
+      SPARK_VERSION="2.4.0"
       ;;
     -*)
       error_msg "unrecognized option: $1"
@@ -54,8 +54,8 @@ if [ $SPARK_VERSION = "2.4.0" ]; then
   echo "Compiling with Wheel..."
   make clean
   make wheel
-  HAIL_WHEEL=`ls /opt/hail-on-EMR/src/hail/hail/build/deploy/dist | grep "whl"`
-  sudo python3 -m pip install --no-deps /opt/hail-on-EMR/src/hail/hail/build/deploy/dist/$HAIL_WHEEL
+  # HAIL_WHEEL=`ls /opt/hail-on-EMR/src/hail/hail/build/deploy/dist | grep "whl"`
+  # sudo python3 -m pip install --no-deps /opt/hail-on-EMR/src/hail/hail/build/deploy/dist/$HAIL_WHEEL
 else
   ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
   cp $PWD/build/distributions/hail-python.zip $HOME
