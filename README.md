@@ -4,11 +4,10 @@ This `cloudformation` tool creates an EMR cluster under an **emr-5.24.0** releas
 
 ## Before using this tool (Prerequisites)
 
-This tool requires the following programs to be installed (if any of them is missing, they will be installed for you
-!): 
+This tool requires the following programs to be installed <!-- (if any of them is missing, they will be installed for you !) --> : 
 
 * Amazon's `Command Line Interface (CLI)` utility
-* `Conda` environment manager
+* `Conda` environment manager ( We suggest [Miniconda3](https://docs.conda.io/en/latest/miniconda.html))
 
 ## How to use this tool
 
@@ -74,7 +73,7 @@ This script is defaulted to region `ap-southeast-1`, instances `c4.4xlarge` : 3 
 See additional instance details at: https://aws.amazon.com/ec2/instance-types/
 
 2. Execute the command: `python install2.py`. The EMR creation is initiated. The status of the cluster is monitored and will undergo from `STARTING` to `RUNNING` and `WAITING`. <!-- The EMR creation takes between 5-7 minutes. The installation log file is located at `tail -f /tmp/cloudcreation_log.out`; the logs are available, under the same path, at both the local installation computer and at the master node of your EMR -->
-3. Once the cluster is succesfully created and is `WAITING`, the installation of `HAIL` is initiated.
+3. Once the cluster is succesfully created and is in `WAITING` status, the installation of `HAIL` is initiated.
 <!-- You can check the status of the EMR creation at: https://console.aws.amazon.com/elasticmapreduce/home?region=ap-southeast-1. The EMR is successfully created once it gets the status `Waiting`. After created, allow ~20 minutes for all the programs to install. All the programs are installed automatically-->
 4. Once the installation of Hail is done, ssh to the master node using the `Master DNS` indicated by the script.
 <!-- To obtain the **DNS** (to `ssh` in to the master node) and the **public IP** of the Master node (required to connect to the `JupyterNotebook`), from the terminal execute: 

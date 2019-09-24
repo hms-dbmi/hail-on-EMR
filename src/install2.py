@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import boto3 #sudo python3 -m pip install boto3
+import boto3
 import pandas as pd
 import time
 import sys
@@ -19,7 +19,7 @@ PATH=os.path.dirname(os.path.abspath(__file__))
 def launch_emr(cluster_id, c):
     # cluster_id_json=os.popen(command).read()
     # cluster_id=cluster_id_json.split(": \"",1)[1].split("\"\n")[0]
-    #print('\nClusterId: '+cluster_id+'\n')
+    # print('\nClusterId: '+cluster_id+'\n')
 
     # Gives EMR cluster information
     client_EMR = boto3.client('emr')
@@ -43,7 +43,7 @@ def launch_emr(cluster_id, c):
 
     # Get public DNS from master node
     master_dns=details_EMR.get('Cluster').get('MasterPublicDnsName')
-    #master_IP=re.sub("-",".",master_dns.split(".compute")[0].split("ec2-")[1])
+    # master_IP=re.sub("-",".",master_dns.split(".compute")[0].split("ec2-")[1])
     master_IP=re.sub("-",".",master_dns.split(".compute")[0].split("ec2-")[1].split('.')[0])
 
     print('\nMaster DNS: '+ master_dns)
@@ -96,8 +96,8 @@ def main(args):
 
     print("\n\nYour AWS CLI export command:\n")
     print(command)
-    print('args.clusterid:' )
-    print(args.clusterid)
+    # print('args.clusterid:' )
+    # print(args.clusterid)
 
     if args.clusterid:
        cluster_id = args.clusterid
@@ -116,7 +116,7 @@ def main(args):
 
         cluster_id = cluster_id_byte.decode("utf-8").rstrip()
 
-    print(cluster_id)
+    print('Cluster ID: '+ cluster_id)
 
     launch_emr(cluster_id, c)
 
