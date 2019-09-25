@@ -1,0 +1,8 @@
+name: hail
+channels:
+- conda-forge
+dependencies:
+- boto3
+- pandas
+- paramiko
+- pyyaml
