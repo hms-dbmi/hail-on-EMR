@@ -63,10 +63,10 @@ def launch_emr(cluster_id, c):
     # Copy the installation script into the master
     # print('PATH:' + PATH)
     command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/install_hail_python36.sh hadoop@'+master_dns+':/home/hadoop'
-    command2='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/jupyter_pw hadoop@'+master_dns+':/home/hadoop/'
+    # command2='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/jupyter_pw hadoop@'+master_dns+':/home/hadoop/'
     # print (command)
     os.system(command)
-    os.system(command2)
+    # os.system(command2)
 
     print('Installing software...')
     key = paramiko.RSAKey.from_private_key_file(c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem')
@@ -92,7 +92,62 @@ def main(args):
     # command='aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin --tags \'Project='+c['config']['PROJECT_TAG']+'\' \'Owner='+c['config']['OWNER_TAG']+'\' \'Name='+c['config']['EC2_NAME_TAG']+'\' --ec2-attributes \'{"KeyName":"'+c['config']['KEY_NAME']+'","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"'+c['config']['SUBNET_ID']+'","EmrManagedSlaveSecurityGroup":"'+c['config']['SLAVE_SECURITY_GROUP']+'","EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' --service-role EMR_DefaultRole --release-label emr-5.19.0 --log-uri \''+c['config']['S3_BUCKET']+'\' --name \''+c['config']['EMR_CLUSTER_NAME']+'\' --instance-groups \'[{"InstanceCount":1,"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"MASTER","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Master Instance Group"},{"InstanceCount":'+c['config']['CORE_COUNT']+',"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"CORE","InstanceType":"'+c['config']['INSTANCE_TYPE']+'","Name":"Core Instance Group"}]\' --configurations \'[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]\' --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region ap-southeast-1'
 
     # Create Cluster - Instance Store
-    command='aws emr create-cluster --applications Name=Ganglia Name=Spark Name=Zeppelin Name=JupyterHub --tags \'project='+c['config']['PROJECT_TAG']+'\' \'Owner='+c['config']['OWNER_TAG']+'\' \'Name='+c['config']['EC2_NAME_TAG']+'\' --ec2-attributes \'{"KeyName":"'+c['config']['KEY_NAME']+'","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"'+c['config']['SUBNET_ID']+'","EmrManagedSlaveSecurityGroup":"'+c['config']['SLAVE_SECURITY_GROUP']+'","EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' --service-role EMR_DefaultRole --enable-debugging --release-label \''+c['config']['RELEASE_LABEL']+'\' --log-uri \''+c['config']['S3_BUCKET']+'\' --name \''+c['config']['EMR_CLUSTER_NAME']+'\' --instance-groups \'[{"InstanceCount":1,"InstanceGroupType":"MASTER","InstanceType":"'+c['config']['MASTER_INSTANCE_TYPE']+'","Name":"Master Instance Group"},{"InstanceCount":'+c['config']['CORE_COUNT']+',"InstanceGroupType":"CORE","EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":'+c['config']['CORE_EBS_SIZE']+',"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceType":"'+c['config']['SLAVE_INSTANCE_TYPE']+'","Name":"Core Instance Group"}]\' --configurations \'[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"},"Configurations":[]}]\' --configurations \'[{"Classification":"livy-conf","Properties":{"livy.server.session.timeout":"8h"},"Configurations":[]}]\'  --ebs-root-volume-size 32  --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region '+c['config']['REGION']
+    command=(
+        'aws emr create-cluster '
+        '--applications '
+            'Name=Ganglia '
+            'Name=Spark '
+            'Name=Zeppelin '
+            'Name=JupyterHub '
+        '--tags '
+            '\'Project='+c['config']['PROJECT_TAG']+'\' '
+            '\'Owner='+c['config']['OWNER_TAG']+'\' '
+            '\'Name='+c['config']['EC2_NAME_TAG']+'\' '
+        '--ec2-attributes \'{'
+            '"KeyName":"'+c['config']['KEY_NAME']+'",'
+            '"InstanceProfile":"EMR_EC2_DefaultRole",'
+            '"SubnetId":"'+c['config']['SUBNET_ID']+'",'
+            '"EmrManagedSlaveSecurityGroup":"'+c['config']['CORE_SECURITY_GROUP']+'",'
+            '"EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' '
+        '--service-role EMR_DefaultRole '
+        '--enable-debugging '
+        '--release-label \''+c['config']['RELEASE_LABEL']+'\' '
+        '--log-uri \''+c['config']['S3_BUCKET']+'\' '
+        '--name \''+c['config']['EMR_CLUSTER_NAME']+'\' '
+        '--instance-groups \'[{'
+            '"InstanceCount":1,'
+            '"InstanceGroupType":"MASTER",'
+            '"InstanceType":"'+c['config']['MASTER_INSTANCE_TYPE']+'",'
+            '"Name":"Master Instance Group"'
+            '},{'
+            '"InstanceCount":'+c['config']['CORE_COUNT']+','
+            '"InstanceGroupType":"CORE",'
+            '"EbsConfiguration":{'
+                '"EbsBlockDeviceConfigs":[{'
+                    '"VolumeSpecification":{'
+                        '"SizeInGB":'+c['config']['CORE_EBS_SIZE']+','
+                        '"VolumeType":"gp2"'
+                    '},'
+                    '"VolumesPerInstance":1'
+                '}]'
+            '},'
+            '"InstanceType":"'+c['config']['CORE_INSTANCE_TYPE']+'",'
+            '"Name":"Core Instance Group"'
+        '}]\' '
+        '--configurations \'[{'
+            '"Classification":"spark",'
+            '"Properties":{"maximizeResourceAllocation":"true"},'
+            '"Configurations":[]'
+        '}]\' '
+        '--configurations \'[{'
+            '"Classification":"livy-conf",'
+            '"Properties":{"livy.server.session.timeout":"8h"},'
+            '"Configurations":[]'
+        '}]\' '
+        '--ebs-root-volume-size 32  '
+        '--scale-down-behavior TERMINATE_AT_TASK_COMPLETION '
+        '--region '+c['config']['REGION']
+    )
 
     print("\n\nYour AWS CLI export command:\n")
     print(command)

@@ -7,7 +7,7 @@ This `cloudformation` tool creates an EMR cluster under an **emr-5.24.0** releas
 This tool requires the following programs to be installed <!-- (if any of them is missing, they will be installed for you !) --> : 
 
 * Amazon's `Command Line Interface (CLI)` utility
-* `Conda` environment manager ( We suggest [Miniconda3](https://docs.conda.io/en/latest/miniconda.html))
+* `Conda` environment manager (We suggest [Miniconda3](https://docs.conda.io/en/latest/miniconda.html))
 
 ## How to use this tool
 
@@ -32,7 +32,7 @@ conda activate hail
 
 ### EMR `cloudformation`
 
-1. `cd` into the `hail02-on-EMR/src` folder and with the text editor of your preference open the configuration file: `hail02_EMR.yaml`. This file will be used to provide information necessary to create the cluster. Fill in the fields as necessary using your personal key and security groups (SG) information and save your changes. See configuration details below:
+1. `cd` into the `hail02-on-EMR/src` folder and with the text editor of your preference create a configuration file named `hail02_EMR.yaml`. This file will be used to provide information necessary to create the cluster. Fill in the fields as necessary using your personal key and security groups (SG) information and save your changes. See configuration details below:
 
 ```yaml
 config:
@@ -40,17 +40,16 @@ config:
   EC2_NAME_TAG: "my-hail-EMR" # Tags for the individual EC2 instances
   OWNER_TAG: "emr-owner" # EC2 owner tag
   PROJECT_TAG: "my-project" # Project tag
-  SUBPROJECT_TAG: "my-sub-project" # Sub-project tag
   REGION: "ap-southeast-1" # AWS Region tag
   S3_BUCKET: "s3n://my-s3-bucket/" # Input your project's S3 bucket
   KEY_NAME: "my-key" # Input your key name DO NOT include the .pem extension
   PATH_TO_KEY: "/full-path/to-key/" # Full path to .pem file
   MASTER_INSTANCE_TYPE: "c4.4xlarge" # Suggested EC2 instances, change as desired
-  SLAVE_INSTANCE_TYPE: "c4.4xlarge" # Suggested EC2 instances, change as desired
+  CORE_INSTANCE_TYPE: "c4.4xlarge" # Suggested EC2 instances, change as desired
   CORE_COUNT: "3" # Number of cores. Additional reference in the EC2 FAQs website
   CORE_EBS_SIZE: "150" #
   SUBNET_ID: "subnet-12345" # Select you private subnet. See the EC2 FAQs website
-  SLAVE_SECURITY_GROUP: "" # Creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
+  CORE_SECURITY_GROUP: "" # Creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
   MASTER_SECURITY_GROUP: "" # Creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
   RELEASE_LABEL: "emr-5.24.0"
 ```
@@ -82,11 +81,13 @@ tail -4 /tmp/cloudcreation_log.out | head -2
 ```
 -->
 
+<!--
 ## Launching the `JupyterNotebook` with `Hail 0.2`
 
 To launch the  `JupyterNotebook` you need the Master IP address (IPv4) that can be obtained from 1) the terminal by executing: `tail -3 /tmp/cloudcreation_log.out | head -1` or by 2) going to the AWS Management Console website and under `EC2 > Instances` selecting the corresponding `master` node then select the `description tab > Security Groups > view inbound rules`.
 
 Paste the IP in a browser followed by a `:` and port 8192: `PUBLIC_IP_ADDRESS_MASTER_NODE:8192`; use password: *`avillach`* to login. And you are all set! 
+-->
 
 ### FAQs and troubleshooting 
 
