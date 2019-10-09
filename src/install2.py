@@ -81,6 +81,11 @@ def launch_emr(cluster_id, c):
     # close the client connection
     client.close()
 
+    
+    # TODO Test if the .jar is created before printing done
+    # ll /opt/hail-on-EMR/src/hail/hail/build/deploy/hail/
+    # Should see file hail-all-spark.jar
+
     # END
     print('DONE')
 
@@ -136,15 +141,32 @@ def main(args):
         '}]\' '
         '--configurations \'[{'
             '"Classification":"spark",'
-            '"Properties":{"maximizeResourceAllocation":"true"},'
-            '"Configurations":[]'
-        '}]\' '
-        '--configurations \'[{'
+            '"Properties":{"maximizeResourceAllocation":"true"}'
+        '},{'
+            '"Classification":"spark-defaults",'
+            '"Properties":{'
+                '"spark.jars":":/opt/hail-on-EMR/src/hail/hail/build/deploy/hail/hail-all-spark.jar",'
+                '"spark.serializer":"org.apache.spark.serializer.KryoSerializer",'
+                '"spark.kryo.registrator":"is.hail.kryo.HailKryoRegistrator",'
+                '"spark.driver.extraClassPath":":/opt/hail-on-EMR/src/hail/hail/build/deploy/hail/hail-all-spark.jar:/usr/lib/hadoop-lzo/lib/*:/usr/lib/hadoop/hadoop-aws.jar:/usr/share/aws/aws-java-sdk/*:/usr/share/aws/emr/emrfs/conf:/usr/share/aws/emr/emrfs/lib/*:/usr/share/aws/emr/emrfs/auxlib/*:/usr/share/aws/emr/goodies/lib/emr-spark-goodies.jar:/usr/share/aws/emr/security/conf:/usr/share/aws/emr/security/lib/*:/usr/share/aws/hmclient/lib/aws-glue-datacatalog-spark-client.jar:/usr/share/java/Hive-JSON-Serde/hive-openx-serde.jar:/usr/share/aws/sagemaker-spark-sdk/lib/sagemaker-spark-sdk.jar:/usr/share/aws/emr/s3select/lib/emr-s3-select-spark-connector.jar"'
+            '}'
+        '},{'
+            '"Classification":"spark-env",'
+            '"Properties":{'
+            '},'
+            '"Configurations":[{'
+                '"Classification":"export",'
+                '"Properties":{'
+                    '"PYTHONPATH":"$PYTHONPATH:/opt/hail-on-EMR/src/hail/hail/python",'
+                    '"PYSPARK_PYTHON":"python3"'
+                '},'
+                '"Configurations":[]'
+            '}]'
+        '},{'
             '"Classification":"livy-conf",'
-            '"Properties":{"livy.server.session.timeout":"8h"},'
-            '"Configurations":[]'
+            '"Properties":{"livy.server.session.timeout":"8h"}'
         '}]\' '
-        '--ebs-root-volume-size 32  '
+        '--ebs-root-volume-size 32 '
         '--scale-down-behavior TERMINATE_AT_TASK_COMPLETION '
         '--region '+c['config']['REGION']
     )

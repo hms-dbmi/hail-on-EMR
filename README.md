@@ -1,19 +1,19 @@
-# Hail 0.2 on Amazon EMR: `cloudformation` tool 
+# Hail 0.2 on Amazon EMR: `cloudformation` tool
 
-This `cloudformation` tool creates an EMR cluster under an **emr-5.24.0** release using `Spark 2.4.2` and `Hadoop 2.8.3`, with  `Hail 0.2` and `JupyterNotebook` installed. 
+This `cloudformation` tool creates an EMR cluster under an **emr-5.24.0** release using `Spark 2.4.2` and `Hadoop 2.8.3`, with  `Hail 0.2` and `JupyterNotebook` installed.
 
 ## Before using this tool (Prerequisites)
 
-This tool requires the following programs to be installed <!-- (if any of them is missing, they will be installed for you !) --> : 
+This tool requires the following programs to be installed <!-- (if any of them is missing, they will be installed for you !) --> :
 
 * Amazon's `Command Line Interface (CLI)` utility
 * `Conda` environment manager (We suggest [Miniconda3](https://docs.conda.io/en/latest/miniconda.html))
 
 ## How to use this tool
 
-This tool is executed from the terminal using Amazon's `CLI` utility. Before getting started, make sure you have: 
+This tool is executed from the terminal using Amazon's `CLI` utility. Before getting started, make sure you have:
 
-a) **A valid EC2 key pair**. For additional details on how to create and use your key, visit: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
+a) **A valid EC2 key pair**. For additional details on how to create and use your key, visit: <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html>
 
 b) **A configured `CLI` account**. If your `CLI` account has been previously configured, the tool will use it. If you want to re-configure a to use under a specific account or a different user, at the terminal type `aws configure`
 
@@ -54,24 +54,25 @@ config:
   RELEASE_LABEL: "emr-5.24.0"
 ```
 
-This script is defaulted to region `ap-southeast-1`, instances `c4.4xlarge` : 3 `cores` and 1 `master`. For additional configuration details regarding the **emr-5.24.0** release, visit: <https://console.aws.amazon.com/elasticmapreduce/home?region=ap-southeast-1#quick-create\:>. 
+This script is defaulted to region `ap-southeast-1`, instances `c4.4xlarge` : 3 `cores` and 1 `master`. For additional configuration details regarding the **emr-5.24.0** release, visit: <https://console.aws.amazon.com/elasticmapreduce/home?region=ap-southeast-1#quick-create\:>.
 
 |Suggested **`INSTANCE_TYPE`s** |
-|:-------------------------:| 
-| m4.2xlarge | 
-| m4.4xlarge | 
-| m4.10xlarge | 
-| m4.16xlarge | 
-| c4.2xlarge | 
-| c4.4xlarge | 
-| c4.8xlarge | 
-| r4.2xlarge | 
-| r4.4xlarge | 
-| r4.8xlarge | 
+|:-------------------------:|
+| m4.2xlarge |
+| m4.4xlarge |
+| m4.10xlarge |
+| m4.16xlarge |
+| c4.2xlarge |
+| c4.4xlarge |
+| c4.8xlarge |
+| r4.2xlarge |
+| r4.4xlarge |
+| r4.8xlarge |
 
-See additional instance details at: https://aws.amazon.com/ec2/instance-types/
+See additional instance details at: <https://aws.amazon.com/ec2/instance-types/>
 
-2. Execute the command: `python install2.py`. The EMR creation is initiated. The status of the cluster is monitored and will undergo from `STARTING` to `RUNNING` and `WAITING`. <!-- The EMR creation takes between 5-7 minutes. The installation log file is located at `tail -f /tmp/cloudcreation_log.out`; the logs are available, under the same path, at both the local installation computer and at the master node of your EMR -->
+2. Execute the command: `python install2.py`. The EMR creation is initiated. The status of the cluster is monitored and will undergo from `STARTING` to `RUNNING` and `WAITING`.
+<!-- The EMR creation takes between 5-7 minutes. The installation log file is located at `tail -f /tmp/cloudcreation_log.out`; the logs are available, under the same path, at both the local installation computer and at the master node of your EMR -->
 3. Once the cluster is succesfully created and is in `WAITING` status, the installation of `HAIL` is initiated.
 <!-- You can check the status of the EMR creation at: https://console.aws.amazon.com/elasticmapreduce/home?region=ap-southeast-1. The EMR is successfully created once it gets the status `Waiting`. After created, allow ~20 minutes for all the programs to install. All the programs are installed automatically-->
 4. Once the installation of Hail is done, ssh to the master node using the `Master DNS` indicated by the script.
@@ -89,10 +90,10 @@ To launch the  `JupyterNotebook` you need the Master IP address (IPv4) that can 
 Paste the IP in a browser followed by a `:` and port 8192: `PUBLIC_IP_ADDRESS_MASTER_NODE:8192`; use password: *`avillach`* to login. And you are all set! 
 -->
 
-### FAQs and troubleshooting 
+### FAQs and troubleshooting
 
-* EC2 FAQs website: https://aws.amazon.com/ec2/faqs/#How_many_instances_can_I_run_in_Amazon_EC2
+* EC2 FAQs website: <https://aws.amazon.com/ec2/faqs/#How_many_instances_can_I_run_in_Amazon_EC2>
 
-* EC2 security groups: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html#emr-def-sec-groups
+* EC2 security groups: <https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html#emr-def-sec-groups>
 
-* EC2 instance types: https://aws.amazon.com/ec2/instance-types/
+* EC2 instance types: <https://aws.amazon.com/ec2/instance-types/>
