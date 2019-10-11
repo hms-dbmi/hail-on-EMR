@@ -45,12 +45,14 @@ echo '### LOOPING TO INSTALL PYTHON3 & HAIL IN SLAVE NODES ###'
 
 for SLAVEIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
 do
-   # Copy hail.jar
-   scp /home/hadoop/hail-all-spark.jar $SLAVEIP:/home/hadoop/
-   # Update python3
+   # Install python3
    scp python3_install.sh hadoop@${SLAVEIP}:/tmp/python3_install.sh
    ssh hadoop@${SLAVEIP} "chmod +x /tmp/python3_install.sh"
    ssh hadoop@${SLAVEIP} "sudo ls -al /tmp/python3_install.sh"
    ssh hadoop@${SLAVEIP} "sudo /tmp/python3_install.sh"
    ssh hadoop@${SLAVEIP} "python3 --version"
+   # Update Hail
+   ssh hadoop@${SLAVEIP} "mkdir -p /opt/hail"
+   scp -r /opt/hail/* hadoop@${SLAVEIP}:/opt/hail/ & wait
+   # Done
 done
