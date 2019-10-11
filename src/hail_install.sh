@@ -24,8 +24,7 @@ sudo chmod 777 /opt/
 
 # Clone hail-on-EMR
 cd /opt
-git clone --single-branch --branch f-copy-jar  https://github.com/Jack-Ow/hail-on-EMR.git
-cd /opt/hail-on-EMR/src
+git clone --single-branch --branch f-copy-jar  https://github.com/c-BIG/hail-on-EMR.git
 
 # Adjust permissions
 sudo chown -R hadoop:hadoop /opt
