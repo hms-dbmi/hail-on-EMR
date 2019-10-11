@@ -1,5 +1,5 @@
 #!/bin/bash
-echo '### PYTHON3_INSTALL.SH ###'
+echo '### HAIL_PYTHON3.SH ###'
 
 export PATH=$PATH:/usr/local/bin
 

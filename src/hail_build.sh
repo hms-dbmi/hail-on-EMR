@@ -47,17 +47,17 @@ if [ "$IS_MASTER" = true ]; then
   # Java JDK
   sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.*.amzn1.x86_64/include /etc/alternatives/jre/include
   # Clone Hail
-  mkdir -p /opt/hail
-  cd /opt/hail
+  mkdir -p /opt/broad-hail
+  cd /opt/broad-hail
   git clone https://github.com/broadinstitute/hail.git .
-  cd /opt/hail/hail/
+  cd /opt/broad-hail/hail/
 
   # Compile Spark 2.4.2
   if [ $SPARK_VERSION = "2.4.0" ]; then
     echo "Compiling with Wheel..."
     make clean
     make wheel
-    # .jar is /opt/hail/hail/build/deploy/hail/hail-all-spark.jar
+    # .jar is /opt/broad-hail/hail/build/deploy/hail/hail-all-spark.jar
   else
     ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
     cp $PWD/build/distributions/hail-python.zip $HOME
@@ -65,9 +65,10 @@ if [ "$IS_MASTER" = true ]; then
   # else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
   fi
 
-# Copy .jar to Home
-scp /opt/hail/hail/build/deploy/hail/hail-all-spark.jar /home/hadoop/
-sudo chown hadoop:hadoop /home/hadoop/hail-all-spark.jar
-sudo chmod +x hail-all-spark.jar
+# Copy .jar & python to /opt/hail
+mkdir -p /opt/hail
+scp /opt/broad-hail/hail/build/deploy/hail/hail-all-spark.jar /opt/hail/
+scp -r /opt/broad-hail/hail/python /opt/hail/
+sudo chown -R hadoop:hadoop /opt/hail
 
 fi

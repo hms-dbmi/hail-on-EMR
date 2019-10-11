@@ -1,5 +1,5 @@
 #!/bin/bash
-# Dependencies: hail_install_python3.sh, setup.sh, jupyter_build.sh, jupyter_run.sh
+# Dependencies: hail_build.sh, hail_python3.sh, hail_update.sh 
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/cloudcreation_log.out 2>&1
@@ -29,13 +29,13 @@ cd /opt/hail-on-EMR/src
 
 # Adjust permissions
 sudo chown -R hadoop:hadoop /opt
+sudo chmod +x hail_python3.sh
 sudo chmod +x hail_update.sh
 sudo chmod +x hail_build.sh
-sudo chmod +x python3_install.sh
 
 echo '### MASTER NODE: INSTALLING PYTHON3 & DEPENDANCIES ###'
 
-./python3_install.sh 
+./hail_python3.sh 
 
 echo '### MASTER NODE: UPDATING HAIL ###'
 
