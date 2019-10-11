@@ -24,7 +24,7 @@ sudo chmod 777 /opt/
 
 # Clone hail-on-EMR
 cd /opt
-git clone --single-branch --branch 5.24  https://github.com/Jack-Ow/hail-on-EMR.git
+git clone --single-branch --branch f-copy-jar  https://github.com/Jack-Ow/hail-on-EMR.git
 cd /opt/hail-on-EMR/src
 
 # Adjust permissions
