@@ -24,7 +24,7 @@ sudo chmod 777 /opt/
 
 # Clone hail-on-EMR
 cd /opt
-git clone --single-branch --branch f-copy-jar  https://github.com/c-BIG/hail-on-EMR.git
+git clone --single-branch --branch 5.24  https://github.com/c-BIG/hail-on-EMR.git
 cd /opt/hail-on-EMR/src
 
 # Adjust permissions
@@ -57,3 +57,5 @@ do
    scp -r /opt/hail/* hadoop@${SLAVEIP}:/opt/hail/ & wait
    # Done
 done
+
+echo '### HAIL_INSTALL.SH DONE ###'
