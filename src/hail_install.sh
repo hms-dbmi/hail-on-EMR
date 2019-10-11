@@ -52,7 +52,7 @@ do
    ssh hadoop@${SLAVEIP} "sudo /tmp/python3_install.sh"
    ssh hadoop@${SLAVEIP} "python3 --version"
    # Update Hail
-   ssh hadoop@${SLAVEIP} "mkdir -p /opt/hail"
+   ssh hadoop@${SLAVEIP} "sudo mkdir -p /opt/hail"
    scp -r /opt/hail/* hadoop@${SLAVEIP}:/opt/hail/ & wait
    # Done
 done
