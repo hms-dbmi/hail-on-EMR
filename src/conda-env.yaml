@@ -2,7 +2,7 @@ name: hail
 channels:
 - conda-forge
 dependencies:
-- boto3
-- pandas
-- paramiko
-- pyyaml
+- boto3=1.9.234
+- pandas=0.25.1
+- paramiko=2.6.0
+- pyyaml=5.1.2
