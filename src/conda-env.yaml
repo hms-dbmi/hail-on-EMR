@@ -2,6 +2,7 @@ name: hail
 channels:
 - conda-forge
 dependencies:
+- awscli=1.16.260
 - boto3=1.9.234
 - pandas=0.25.1
 - paramiko=2.6.0
