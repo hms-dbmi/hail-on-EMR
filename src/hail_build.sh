@@ -37,30 +37,38 @@ while [ $# -gt 0 ]; do
 done
 
 if [ "$IS_MASTER" = true ]; then
+  # Install dependencies 
   sudo yum update -y
   sudo yum install g++ cmake git -y
   sudo /usr/bin/pip install --upgrade pip
   # Fixes issue of missing lz4 
   sudo yum install -y lz4
   sudo yum install -y lz4-devel
-  git clone https://github.com/broadinstitute/hail.git
-  cd hail/hail/
-	
-	# src/scripts/context.py
-	sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.*.amzn1.x86_64/include /etc/alternatives/jre/include
+  # Java JDK
+  sudo ln -s /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.*.amzn1.x86_64/include /etc/alternatives/jre/include
+  # Clone Hail
+  mkdir -p /opt/broad-hail
+  cd /opt/broad-hail
+  git clone https://github.com/broadinstitute/hail.git .
+  cd /opt/broad-hail/hail/
 
-# Compile Spark 2.4.2
-if [ $SPARK_VERSION = "2.4.0" ]; then
-  echo "Compiling with Wheel..."
-  make clean
-  make wheel
-  # HAIL_WHEEL=`ls /opt/hail-on-EMR/src/hail/hail/build/deploy/dist | grep "whl"`
-  # sudo python3 -m pip install --no-deps /opt/hail-on-EMR/src/hail/hail/build/deploy/dist/$HAIL_WHEEL
-else
-  ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
-  cp $PWD/build/distributions/hail-python.zip $HOME
-  cp $PWD/build/libs/hail-all-spark.jar $HOME
-#else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
-fi
+  # Compile Spark 2.4.2
+  if [ $SPARK_VERSION = "2.4.0" ]; then
+    echo "Compiling with Wheel..."
+    make clean
+    make wheel
+    # .jar is /opt/broad-hail/hail/build/deploy/hail/hail-all-spark.jar
+  else
+    ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.7 shadowJar archiveZip	
+    cp $PWD/build/distributions/hail-python.zip $HOME
+    cp $PWD/build/libs/hail-all-spark.jar $HOME
+  # else  ./gradlew -Dspark.version=$SPARK_VERSION shadowJar archiveZip
+  fi
+
+# Copy .jar & python to /opt/hail
+mkdir -p /opt/hail
+scp /opt/broad-hail/hail/build/deploy/hail/hail-all-spark.jar /opt/hail/
+scp -r /opt/broad-hail/hail/python /opt/hail/
+sudo chown -R hadoop:hadoop /opt/hail
 
 fi

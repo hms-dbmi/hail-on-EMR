@@ -12,9 +12,17 @@ import yaml
 import subprocess
 import ast
 import argparse
+import json
 
 PATH=os.path.dirname(os.path.abspath(__file__))
 
+
+def is_json(myjson):
+        try:
+            json_object = json.loads(myjson)
+        except ValueError as e:
+            return False
+        return True
 
 def launch_emr(cluster_id, c):
     # cluster_id_json=os.popen(command).read()
@@ -62,7 +70,7 @@ def launch_emr(cluster_id, c):
     print('Copying installation script...')
     # Copy the installation script into the master
     # print('PATH:' + PATH)
-    command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/install_hail_python36.sh hadoop@'+master_dns+':/home/hadoop'
+    command='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/hail_install.sh hadoop@'+master_dns+':/home/hadoop'
     # command2='scp -o \'StrictHostKeyChecking no\' -i '+c['config']['PATH_TO_KEY']+ '/' + c['config']['KEY_NAME']+'.pem '+PATH+'/jupyter_pw hadoop@'+master_dns+':/home/hadoop/'
     # print (command)
     os.system(command)
@@ -76,8 +84,8 @@ def launch_emr(cluster_id, c):
     client.connect(hostname=master_IP, username="hadoop", pkey=key)
     # Execute a command(cmd) after connecting/ssh to an instance
     stdin, stdout, stderr = client.exec_command('cd /home/hadoop/')
-    stdin, stdout, stderr = client.exec_command('chmod +x install_hail_python36.sh')
-    stdin, stdout, stderr = client.exec_command('./install_hail_python36.sh %s'% c['config']['KEY_NAME']+'.pem')
+    stdin, stdout, stderr = client.exec_command('chmod +x hail_install.sh')
+    stdin, stdout, stderr = client.exec_command('./hail_install.sh %s'% c['config']['KEY_NAME']+'.pem')
     # close the client connection
     client.close()
 
@@ -145,10 +153,11 @@ def main(args):
         '},{'
             '"Classification":"spark-defaults",'
             '"Properties":{'
-                '"spark.jars":":/opt/hail-on-EMR/src/hail/hail/build/deploy/hail/hail-all-spark.jar",'
+                '"spark.jars":":/opt/hail/hail-all-spark.jar",'
                 '"spark.serializer":"org.apache.spark.serializer.KryoSerializer",'
                 '"spark.kryo.registrator":"is.hail.kryo.HailKryoRegistrator",'
-                '"spark.driver.extraClassPath":":/opt/hail-on-EMR/src/hail/hail/build/deploy/hail/hail-all-spark.jar:/usr/lib/hadoop-lzo/lib/*:/usr/lib/hadoop/hadoop-aws.jar:/usr/share/aws/aws-java-sdk/*:/usr/share/aws/emr/emrfs/conf:/usr/share/aws/emr/emrfs/lib/*:/usr/share/aws/emr/emrfs/auxlib/*:/usr/share/aws/emr/goodies/lib/emr-spark-goodies.jar:/usr/share/aws/emr/security/conf:/usr/share/aws/emr/security/lib/*:/usr/share/aws/hmclient/lib/aws-glue-datacatalog-spark-client.jar:/usr/share/java/Hive-JSON-Serde/hive-openx-serde.jar:/usr/share/aws/sagemaker-spark-sdk/lib/sagemaker-spark-sdk.jar:/usr/share/aws/emr/s3select/lib/emr-s3-select-spark-connector.jar"'
+                '"spark.driver.extraClassPath":":/opt/hail/hail-all-spark.jar:/usr/lib/hadoop-lzo/lib/*:/usr/lib/hadoop/hadoop-aws.jar:/usr/share/aws/aws-java-sdk/*:/usr/share/aws/emr/emrfs/conf:/usr/share/aws/emr/emrfs/lib/*:/usr/share/aws/emr/emrfs/auxlib/*:/usr/share/aws/emr/goodies/lib/emr-spark-goodies.jar:/usr/share/aws/emr/security/conf:/usr/share/aws/emr/security/lib/*:/usr/share/aws/hmclient/lib/aws-glue-datacatalog-spark-client.jar:/usr/share/java/Hive-JSON-Serde/hive-openx-serde.jar:/usr/share/aws/sagemaker-spark-sdk/lib/sagemaker-spark-sdk.jar:/usr/share/aws/emr/s3select/lib/emr-s3-select-spark-connector.jar",'
+                '"spark.executor.extraClassPath":":/opt/hail/hail-all-spark.jar:/usr/lib/hadoop-lzo/lib/*:/usr/lib/hadoop/hadoop-aws.jar:/usr/share/aws/aws-java-sdk/*:/usr/share/aws/emr/emrfs/conf:/usr/share/aws/emr/emrfs/lib/*:/usr/share/aws/emr/emrfs/auxlib/*:/usr/share/aws/emr/goodies/lib/emr-spark-goodies.jar:/usr/share/aws/emr/security/conf:/usr/share/aws/emr/security/lib/*:/usr/share/aws/hmclient/lib/aws-glue-datacatalog-spark-client.jar:/usr/share/java/Hive-JSON-Serde/hive-openx-serde.jar:/usr/share/aws/sagemaker-spark-sdk/lib/sagemaker-spark-sdk.jar:/usr/share/aws/emr/s3select/lib/emr-s3-select-spark-connector.jar"'
             '}'
         '},{'
             '"Classification":"spark-env",'
@@ -157,7 +166,7 @@ def main(args):
             '"Configurations":[{'
                 '"Classification":"export",'
                 '"Properties":{'
-                    '"PYTHONPATH":"$PYTHONPATH:/opt/hail-on-EMR/src/hail/hail/python",'
+                    '"PYTHONPATH":"$PYTHONPATH:/opt/hail/python",'
                     '"PYSPARK_PYTHON":"python3"'
                 '},'
                 '"Configurations":[]'
@@ -173,9 +182,7 @@ def main(args):
 
     print("\n\nYour AWS CLI export command:\n")
     print(command)
-    # print('args.clusterid:' )
-    # print(args.clusterid)
-
+    
     if args.clusterid:
        cluster_id = args.clusterid
 
@@ -183,15 +190,14 @@ def main(args):
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
 
         cluster_id_byte = process.stdout.read()
-        # cluster_id_json = cluster_id_byte.decode("utf-8")
-        # cluster_id_dict = {}
-        # print(cluster_id_json)
-        # cluster_id_dict = cluster_id_json
-        # print("cluster_id_dict")
-        # print( cluster_id_dict)
-        # cluster_id = cluster_id_dict["ClusterId"]
+        
+        if is_json(cluster_id_byte):
+            cluster_dict = json.loads(cluster_id_byte)
+            cluster_id = cluster_dict["ClusterId"]
+        else:
+            cluster_id = cluster_id_byte.decode("utf-8").rstrip()
 
-        cluster_id = cluster_id_byte.decode("utf-8").rstrip()
+        print( "2")
 
     print('Cluster ID: '+ cluster_id)
 
