@@ -174,9 +174,7 @@ def main(args):
 
     print("\n\nYour AWS CLI export command:\n")
     print(command)
-    # print('args.clusterid:' )
-    # print(args.clusterid)
-
+    
     if args.clusterid:
        cluster_id = args.clusterid
 
@@ -184,15 +182,12 @@ def main(args):
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
 
         cluster_id_byte = process.stdout.read()
-        # cluster_id_json = cluster_id_byte.decode("utf-8")
-        # cluster_id_dict = {}
-        # print(cluster_id_json)
-        # cluster_id_dict = cluster_id_json
-        # print("cluster_id_dict")
-        # print( cluster_id_dict)
-        # cluster_id = cluster_id_dict["ClusterId"]
-
-        cluster_id = cluster_id_byte.decode("utf-8").rstrip()
+        cluster_id_strip = cluster_id_byte.decode("utf-8").rstrip()
+        
+        if isinstance(cluster_id_strip, str):
+            cluster_id = cluster_id_strip
+        else:
+            cluster_id = cluster_id_strip["ClusterId"]
 
     print('Cluster ID: '+ cluster_id)
 
