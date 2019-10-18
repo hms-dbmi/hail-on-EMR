@@ -12,9 +12,17 @@ import yaml
 import subprocess
 import ast
 import argparse
+import json
 
 PATH=os.path.dirname(os.path.abspath(__file__))
 
+
+def is_json(myjson):
+        try:
+            json_object = json.loads(myjson)
+        except ValueError as e:
+            return False
+        return True
 
 def launch_emr(cluster_id, c):
     # cluster_id_json=os.popen(command).read()
@@ -182,12 +190,14 @@ def main(args):
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
 
         cluster_id_byte = process.stdout.read()
-        cluster_id_strip = cluster_id_byte.decode("utf-8").rstrip()
         
-        if isinstance(cluster_id_strip, str):
-            cluster_id = cluster_id_strip
+        if is_json(cluster_id_byte):
+            cluster_dict = json.loads(cluster_id_byte)
+            cluster_id = cluster_dict["ClusterId"]
         else:
-            cluster_id = cluster_id_strip["ClusterId"]
+            cluster_id = cluster_id_byte.decode("utf-8").rstrip()
+
+        print( "2")
 
     print('Cluster ID: '+ cluster_id)
 
